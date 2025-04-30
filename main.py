@@ -1,5 +1,6 @@
 import requests
 import json # Still useful if the response is JSON
+from data_parser import response_parse # Assuming this is the correct import path   
 
 def simple_get_request(url: str, params: dict = None, headers: dict = None):
     try:
@@ -57,22 +58,14 @@ response = simple_get_request(
 # Process the response
 if response:
     # You can access response details like:
-    # response.status_code
-    # response.headers
-    # response.text (raw body as string)
-    # response.json() (body as Python dict/list, if it's valid JSON)
+    # response.status_code, response.headers, response.text, etc.
+    print(response.status_code)    
 
     try:
-        # Attempt to parse the response body as JSON
-        data = response.json()['result']["travels"]
-
-        # print("\nResponse Data (first 500 characters):")
-        print(json.dumps(data, indent=4)[:700] + "...") # Print a snippet
-        with open('data.json', 'w') as newdata:
-            json.dump(response.json(), newdata, indent=4)
-                
+        response_parsed_data = response_parse(response.json()) # Assuming this function is defined in data_parser.py
         
-        # print(json.dumps(data, indent=2)) # Uncomment to print full data
+        print("\nParsed Response:")
+        print(json.dumps(response_parsed_data, indent=4)) # Pretty print the parsed data
     except json.JSONDecodeError:
         print("\nResponse was not in JSON format.")
         print("Response body:")
