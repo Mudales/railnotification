@@ -7,7 +7,7 @@ current_time = now.strftime("%H:%M")
 
 
 s = israelrailapi.TrainSchedule()
-print(s.query('Lod', 'Kiryat Gat', start_hour="20:00"))
+print(s.query('Lod', 'Kiryat Gat', start_hour=current_time))
 
 
 

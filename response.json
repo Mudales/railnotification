@@ -1,0 +1,3631 @@
+{
+    "creationDate": "2025-04-22T12:09:31.3946212+03:00",
+    "version": "4.1.0",
+    "successStatus": 1,
+    "statusCode": 200,
+    "errorMessages": null,
+    "result": {
+        "numOfResultsToShow": 5,
+        "startFromIndex": 11,
+        "onFocusIndex": 12,
+        "clientMessageId": 1,
+        "freeSeatsError": false,
+        "travels": [
+            {
+                "departureTime": "2025-04-22T06:04:00",
+                "arrivalTime": "2025-04-22T06:29:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 429,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T06:29:00",
+                        "departureTime": "2025-04-22T06:04:00",
+                        "stopStations": [],
+                        "handicap": 1,
+                        "crowded": 0.07,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "05:42",
+                                "crowded": 0.0225,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "05:45",
+                                "crowded": 0.0325,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "05:50",
+                                "crowded": 0.055,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "06:04",
+                                "crowded": 0.07,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "06:29",
+                                "crowded": 0.065,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "06:53",
+                                "crowded": 0.035,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "07:02",
+                                "crowded": 0,
+                                "platform": 5
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T06:35:00",
+                "arrivalTime": "2025-04-22T07:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 19,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T07:11:00",
+                        "departureTime": "2025-04-22T06:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T06:41:00",
+                                "departureTime": "2025-04-22T06:41:00",
+                                "platform": 2,
+                                "crowded": 0.0975
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T06:50:00",
+                                "departureTime": "2025-04-22T06:50:00",
+                                "platform": 2,
+                                "crowded": 0.12
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T06:59:00",
+                                "departureTime": "2025-04-22T06:59:00",
+                                "platform": 2,
+                                "crowded": 0.13
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.095,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "06:12",
+                                "crowded": 0.03,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "06:15",
+                                "crowded": 0.0425,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "06:20",
+                                "crowded": 0.0925,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "06:35",
+                                "crowded": 0.095,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "06:41",
+                                "crowded": 0.0975,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "06:50",
+                                "crowded": 0.12,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "06:59",
+                                "crowded": 0.13,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "07:11",
+                                "crowded": 0.15,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "07:30",
+                                "crowded": 0.1525,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "07:41",
+                                "crowded": 0.0825,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "07:50",
+                                "crowded": 0,
+                                "platform": 5
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T07:04:00",
+                "arrivalTime": "2025-04-22T07:29:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 401,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T07:29:00",
+                        "departureTime": "2025-04-22T07:04:00",
+                        "stopStations": [],
+                        "handicap": 1,
+                        "crowded": 0.2025,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "06:42",
+                                "crowded": 0.0775,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "06:45",
+                                "crowded": 0.11,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "06:50",
+                                "crowded": 0.1575,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "07:04",
+                                "crowded": 0.2025,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "07:29",
+                                "crowded": 0.21,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "07:53",
+                                "crowded": 0.1125,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "08:02",
+                                "crowded": 0,
+                                "platform": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T07:35:00",
+                "arrivalTime": "2025-04-22T08:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 21,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T08:11:00",
+                        "departureTime": "2025-04-22T07:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T07:41:00",
+                                "departureTime": "2025-04-22T07:41:00",
+                                "platform": 2,
+                                "crowded": 0.2425
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T07:50:00",
+                                "departureTime": "2025-04-22T07:50:00",
+                                "platform": 2,
+                                "crowded": 0.24
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T07:59:00",
+                                "departureTime": "2025-04-22T07:59:00",
+                                "platform": 2,
+                                "crowded": 0.2425
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.2575,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1600,
+                                "arrivalTime": "05:28",
+                                "crowded": 0.0675,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1500,
+                                "arrivalTime": "05:35",
+                                "crowded": 0.125,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "05:45",
+                                "crowded": 0.1775,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "05:53",
+                                "crowded": 0.1925,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "06:01",
+                                "crowded": 0.215,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "06:06",
+                                "crowded": 0.22,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "06:13",
+                                "crowded": 0.3325,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "06:57",
+                                "crowded": 0.2875,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "07:05",
+                                "crowded": 0.2725,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "07:12",
+                                "crowded": 0.2575,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "07:15",
+                                "crowded": 0.23,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "07:20",
+                                "crowded": 0.2625,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "07:35",
+                                "crowded": 0.2575,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "07:41",
+                                "crowded": 0.2425,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "07:50",
+                                "crowded": 0.24,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "07:59",
+                                "crowded": 0.2425,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "08:11",
+                                "crowded": 0.245,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "08:30",
+                                "crowded": 0.2425,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "08:41",
+                                "crowded": 0.155,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "08:50",
+                                "crowded": 0,
+                                "platform": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T08:04:00",
+                "arrivalTime": "2025-04-22T08:29:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 403,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T08:29:00",
+                        "departureTime": "2025-04-22T08:04:00",
+                        "stopStations": [],
+                        "handicap": 1,
+                        "crowded": 0.38,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1840,
+                                "arrivalTime": "05:59",
+                                "crowded": 0.285,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1820,
+                                "arrivalTime": "06:06",
+                                "crowded": 0.3425,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "06:18",
+                                "crowded": 0.44,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "06:25",
+                                "crowded": 0.4525,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "06:33",
+                                "crowded": 0.4625,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "06:38",
+                                "crowded": 0.4125,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "06:44",
+                                "crowded": 0.495,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3100,
+                                "arrivalTime": "07:08",
+                                "crowded": 0.7575,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "07:27",
+                                "crowded": 0.75,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "07:35",
+                                "crowded": 0.6625,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "07:43",
+                                "crowded": 0.5425,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "07:45",
+                                "crowded": 0.3975,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "07:50",
+                                "crowded": 0.41,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "08:04",
+                                "crowded": 0.38,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "08:29",
+                                "crowded": 0.3625,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "08:47",
+                                "crowded": 0.355,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "08:57",
+                                "crowded": 0.215,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "09:06",
+                                "crowded": 0,
+                                "platform": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T08:35:00",
+                "arrivalTime": "2025-04-22T09:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 23,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T09:11:00",
+                        "departureTime": "2025-04-22T08:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T08:41:00",
+                                "departureTime": "2025-04-22T08:41:00",
+                                "platform": 2,
+                                "crowded": 0.2475
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T08:50:00",
+                                "departureTime": "2025-04-22T08:50:00",
+                                "platform": 2,
+                                "crowded": 0.245
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T08:59:00",
+                                "departureTime": "2025-04-22T08:59:00",
+                                "platform": 2,
+                                "crowded": 0.225
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.275,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1600,
+                                "arrivalTime": "06:28",
+                                "crowded": 0.1775,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1500,
+                                "arrivalTime": "06:35",
+                                "crowded": 0.2725,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "06:45",
+                                "crowded": 0.38,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "06:53",
+                                "crowded": 0.3775,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "07:01",
+                                "crowded": 0.3925,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "07:06",
+                                "crowded": 0.38,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "07:12",
+                                "crowded": 0.5025,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "07:57",
+                                "crowded": 0.4625,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "08:05",
+                                "crowded": 0.41,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "08:12",
+                                "crowded": 0.365,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "08:15",
+                                "crowded": 0.2625,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "08:20",
+                                "crowded": 0.29,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "08:35",
+                                "crowded": 0.275,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "08:41",
+                                "crowded": 0.2475,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "08:50",
+                                "crowded": 0.245,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "08:59",
+                                "crowded": 0.225,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "09:11",
+                                "crowded": 0.2175,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "09:30",
+                                "crowded": 0.2175,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "09:41",
+                                "crowded": 0.1375,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "09:50",
+                                "crowded": 0,
+                                "platform": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T09:04:00",
+                "arrivalTime": "2025-04-22T09:29:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 405,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T09:29:00",
+                        "departureTime": "2025-04-22T09:04:00",
+                        "stopStations": [],
+                        "handicap": 1,
+                        "crowded": 0.3725,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1840,
+                                "arrivalTime": "06:59",
+                                "crowded": 0.415,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1820,
+                                "arrivalTime": "07:06",
+                                "crowded": 0.4975,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "07:18",
+                                "crowded": 0.6475,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "07:25",
+                                "crowded": 0.6475,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "07:33",
+                                "crowded": 0.645,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "07:38",
+                                "crowded": 0.5875,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "07:44",
+                                "crowded": 0.725,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3100,
+                                "arrivalTime": "08:08",
+                                "crowded": 1.0725,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "08:27",
+                                "crowded": 1,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "08:35",
+                                "crowded": 0.895,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "08:43",
+                                "crowded": 0.6675,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "08:45",
+                                "crowded": 0.3775,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "08:50",
+                                "crowded": 0.3925,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "09:04",
+                                "crowded": 0.3725,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "09:29",
+                                "crowded": 0.355,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "09:47",
+                                "crowded": 0.3525,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "09:57",
+                                "crowded": 0.2275,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "10:06",
+                                "crowded": 0,
+                                "platform": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T09:35:00",
+                "arrivalTime": "2025-04-22T10:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 25,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T10:11:00",
+                        "departureTime": "2025-04-22T09:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T09:41:00",
+                                "departureTime": "2025-04-22T09:41:00",
+                                "platform": 2,
+                                "crowded": 0.1975
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T09:50:00",
+                                "departureTime": "2025-04-22T09:50:00",
+                                "platform": 2,
+                                "crowded": 0.1875
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T09:59:00",
+                                "departureTime": "2025-04-22T09:59:00",
+                                "platform": 2,
+                                "crowded": 0.1825
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.2125,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1600,
+                                "arrivalTime": "07:28",
+                                "crowded": 0.2825,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1500,
+                                "arrivalTime": "07:35",
+                                "crowded": 0.4025,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "07:46",
+                                "crowded": 0.5475,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "07:53",
+                                "crowded": 0.5025,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "08:01",
+                                "crowded": 0.495,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "08:06",
+                                "crowded": 0.4575,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "08:12",
+                                "crowded": 0.5875,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "08:57",
+                                "crowded": 0.515,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "09:05",
+                                "crowded": 0.4525,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "09:12",
+                                "crowded": 0.3675,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "09:15",
+                                "crowded": 0.2025,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "09:20",
+                                "crowded": 0.22,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "09:35",
+                                "crowded": 0.2125,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "09:41",
+                                "crowded": 0.1975,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "09:50",
+                                "crowded": 0.1875,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "09:59",
+                                "crowded": 0.1825,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "10:11",
+                                "crowded": 0.1725,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "10:30",
+                                "crowded": 0.17,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "10:41",
+                                "crowded": 0.1175,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "10:50",
+                                "crowded": 0,
+                                "platform": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T10:04:00",
+                "arrivalTime": "2025-04-22T10:29:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 407,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T10:29:00",
+                        "departureTime": "2025-04-22T10:04:00",
+                        "stopStations": [],
+                        "handicap": 1,
+                        "crowded": 0.25,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1840,
+                                "arrivalTime": "07:59",
+                                "crowded": 0.315,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1820,
+                                "arrivalTime": "08:06",
+                                "crowded": 0.375,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "08:18",
+                                "crowded": 0.4875,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "08:25",
+                                "crowded": 0.4925,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "08:33",
+                                "crowded": 0.4975,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "08:38",
+                                "crowded": 0.4875,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "08:44",
+                                "crowded": 0.58,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3100,
+                                "arrivalTime": "09:08",
+                                "crowded": 0.8225,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "09:27",
+                                "crowded": 0.725,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "09:35",
+                                "crowded": 0.635,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "09:43",
+                                "crowded": 0.47,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "09:45",
+                                "crowded": 0.25,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "09:50",
+                                "crowded": 0.255,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "10:04",
+                                "crowded": 0.25,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "10:29",
+                                "crowded": 0.2375,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "10:47",
+                                "crowded": 0.2325,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "10:57",
+                                "crowded": 0.1525,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "11:06",
+                                "crowded": 0,
+                                "platform": 5
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T10:35:00",
+                "arrivalTime": "2025-04-22T11:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 27,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T11:11:00",
+                        "departureTime": "2025-04-22T10:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T10:41:00",
+                                "departureTime": "2025-04-22T10:41:00",
+                                "platform": 2,
+                                "crowded": 0.18
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T10:50:00",
+                                "departureTime": "2025-04-22T10:50:00",
+                                "platform": 2,
+                                "crowded": 0.175
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T10:59:00",
+                                "departureTime": "2025-04-22T10:59:00",
+                                "platform": 2,
+                                "crowded": 0.165
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.1925,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1600,
+                                "arrivalTime": "08:28",
+                                "crowded": 0.1775,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1500,
+                                "arrivalTime": "08:35",
+                                "crowded": 0.2475,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "08:45",
+                                "crowded": 0.32,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "08:53",
+                                "crowded": 0.3,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "09:01",
+                                "crowded": 0.3075,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "09:06",
+                                "crowded": 0.3,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "09:12",
+                                "crowded": 0.395,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "09:57",
+                                "crowded": 0.3225,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "10:05",
+                                "crowded": 0.29,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "10:12",
+                                "crowded": 0.255,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "10:15",
+                                "crowded": 0.1675,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "10:20",
+                                "crowded": 0.1875,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "10:35",
+                                "crowded": 0.1925,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "10:41",
+                                "crowded": 0.18,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "10:50",
+                                "crowded": 0.175,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "10:59",
+                                "crowded": 0.165,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "11:11",
+                                "crowded": 0.16,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "11:30",
+                                "crowded": 0.155,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "11:41",
+                                "crowded": 0.12,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "11:50",
+                                "crowded": 0,
+                                "platform": 5
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T11:04:00",
+                "arrivalTime": "2025-04-22T11:29:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 409,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T11:29:00",
+                        "departureTime": "2025-04-22T11:04:00",
+                        "stopStations": [],
+                        "handicap": 1,
+                        "crowded": 0.25,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1840,
+                                "arrivalTime": "08:59",
+                                "crowded": 0.285,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1820,
+                                "arrivalTime": "09:06",
+                                "crowded": 0.3075,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "09:18",
+                                "crowded": 0.3575,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "09:25",
+                                "crowded": 0.3675,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "09:33",
+                                "crowded": 0.385,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "09:38",
+                                "crowded": 0.375,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "09:44",
+                                "crowded": 0.455,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3100,
+                                "arrivalTime": "10:08",
+                                "crowded": 0.5425,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "10:27",
+                                "crowded": 0.495,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "10:35",
+                                "crowded": 0.44,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "10:43",
+                                "crowded": 0.3425,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "10:45",
+                                "crowded": 0.2375,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "10:50",
+                                "crowded": 0.2625,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "11:04",
+                                "crowded": 0.25,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "11:29",
+                                "crowded": 0.2325,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "11:53",
+                                "crowded": 0.16,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "12:02",
+                                "crowded": 0,
+                                "platform": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T11:35:00",
+                "arrivalTime": "2025-04-22T12:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 29,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T12:11:00",
+                        "departureTime": "2025-04-22T11:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T11:41:00",
+                                "departureTime": "2025-04-22T11:41:00",
+                                "platform": 2,
+                                "crowded": 0.3025
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T11:50:00",
+                                "departureTime": "2025-04-22T11:50:00",
+                                "platform": 2,
+                                "crowded": 0.285
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T11:59:00",
+                                "departureTime": "2025-04-22T11:59:00",
+                                "platform": 2,
+                                "crowded": 0.2675
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.3025,
+                        "trainPosition": {
+                            "currentLastStation": 6150,
+                            "nextStation": 7000,
+                            "calcDiffMinutes": 2
+                        },
+                        "routeStations": [
+                            {
+                                "stationId": 1600,
+                                "arrivalTime": "09:28",
+                                "crowded": 0.1125,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1500,
+                                "arrivalTime": "09:35",
+                                "crowded": 0.16,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "09:45",
+                                "crowded": 0.21,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "09:53",
+                                "crowded": 0.235,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "10:01",
+                                "crowded": 0.2525,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "10:06",
+                                "crowded": 0.2575,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "10:12",
+                                "crowded": 0.34,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "10:57",
+                                "crowded": 0.305,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "11:05",
+                                "crowded": 0.31,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "11:12",
+                                "crowded": 0.3025,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "11:15",
+                                "crowded": 0.2725,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "11:20",
+                                "crowded": 0.3,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "11:35",
+                                "crowded": 0.3025,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "11:41",
+                                "crowded": 0.3025,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "11:50",
+                                "crowded": 0.285,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "11:59",
+                                "crowded": 0.2675,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "12:11",
+                                "crowded": 0.2375,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "12:30",
+                                "crowded": 0.22,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "12:41",
+                                "crowded": 0.15,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "12:50",
+                                "crowded": 0,
+                                "platform": 2
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T12:35:00",
+                "arrivalTime": "2025-04-22T13:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 31,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T13:11:00",
+                        "departureTime": "2025-04-22T12:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T12:41:00",
+                                "departureTime": "2025-04-22T12:41:00",
+                                "platform": 2,
+                                "crowded": 0.28
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T12:50:00",
+                                "departureTime": "2025-04-22T12:50:00",
+                                "platform": 2,
+                                "crowded": 0.2675
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T12:59:00",
+                                "departureTime": "2025-04-22T12:59:00",
+                                "platform": 2,
+                                "crowded": 0.2475
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.285,
+                        "trainPosition": {
+                            "currentLastStation": 3700,
+                            "nextStation": 4600,
+                            "calcDiffMinutes": 0
+                        },
+                        "routeStations": [
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "12:12",
+                                "crowded": 0.09,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "12:15",
+                                "crowded": 0.195,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "12:20",
+                                "crowded": 0.2575,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "12:35",
+                                "crowded": 0.285,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "12:41",
+                                "crowded": 0.28,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "12:50",
+                                "crowded": 0.2675,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "12:59",
+                                "crowded": 0.2475,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "13:11",
+                                "crowded": 0.215,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "13:30",
+                                "crowded": 0.2,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "13:41",
+                                "crowded": 0.11,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "13:50",
+                                "crowded": 0,
+                                "platform": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T13:35:00",
+                "arrivalTime": "2025-04-22T14:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 33,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T14:11:00",
+                        "departureTime": "2025-04-22T13:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T13:41:00",
+                                "departureTime": "2025-04-22T13:41:00",
+                                "platform": 2,
+                                "crowded": 0.3525
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T13:50:00",
+                                "departureTime": "2025-04-22T13:50:00",
+                                "platform": 2,
+                                "crowded": 0.335
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T13:59:00",
+                                "departureTime": "2025-04-22T13:59:00",
+                                "platform": 2,
+                                "crowded": 0.315
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.3625,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "13:12",
+                                "crowded": 0.1625,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "13:15",
+                                "crowded": 0.303333,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "13:20",
+                                "crowded": 0.39,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "13:35",
+                                "crowded": 0.3625,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "13:41",
+                                "crowded": 0.3525,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "13:50",
+                                "crowded": 0.335,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "13:59",
+                                "crowded": 0.315,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "14:11",
+                                "crowded": 0.2575,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "14:30",
+                                "crowded": 0.24,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "14:41",
+                                "crowded": 0.14,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "14:50",
+                                "crowded": 0,
+                                "platform": 2
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T14:35:00",
+                "arrivalTime": "2025-04-22T15:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 35,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T15:11:00",
+                        "departureTime": "2025-04-22T14:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T14:41:00",
+                                "departureTime": "2025-04-22T14:41:00",
+                                "platform": 2,
+                                "crowded": 0.59
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T14:50:00",
+                                "departureTime": "2025-04-22T14:50:00",
+                                "platform": 2,
+                                "crowded": 0.5275
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T14:59:00",
+                                "departureTime": "2025-04-22T14:59:00",
+                                "platform": 2,
+                                "crowded": 0.4975
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.61,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "14:12",
+                                "crowded": 0.2425,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "14:15",
+                                "crowded": 0.4675,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "14:20",
+                                "crowded": 0.5775,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "14:35",
+                                "crowded": 0.61,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "14:41",
+                                "crowded": 0.59,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "14:50",
+                                "crowded": 0.5275,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "14:59",
+                                "crowded": 0.4975,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "15:11",
+                                "crowded": 0.4175,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "15:30",
+                                "crowded": 0.365,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "15:41",
+                                "crowded": 0.1975,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "15:50",
+                                "crowded": 0,
+                                "platform": 5
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T15:35:00",
+                "arrivalTime": "2025-04-22T16:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 37,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T16:11:00",
+                        "departureTime": "2025-04-22T15:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T15:41:00",
+                                "departureTime": "2025-04-22T15:41:00",
+                                "platform": 2,
+                                "crowded": 0.726666
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T15:50:00",
+                                "departureTime": "2025-04-22T15:50:00",
+                                "platform": 2,
+                                "crowded": 0.623333
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T15:59:00",
+                                "departureTime": "2025-04-22T15:59:00",
+                                "platform": 2,
+                                "crowded": 0.58
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.746666,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "15:12",
+                                "crowded": 0.33,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "15:15",
+                                "crowded": 0.61,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "15:20",
+                                "crowded": 0.753333,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "15:35",
+                                "crowded": 0.746666,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "15:41",
+                                "crowded": 0.726666,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "15:50",
+                                "crowded": 0.623333,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "15:59",
+                                "crowded": 0.58,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "16:11",
+                                "crowded": 0.483333,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "16:30",
+                                "crowded": 0.423333,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "16:41",
+                                "crowded": 0.226666,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "16:50",
+                                "crowded": 0,
+                                "platform": 5
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T16:35:00",
+                "arrivalTime": "2025-04-22T17:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 39,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T17:11:00",
+                        "departureTime": "2025-04-22T16:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T16:41:00",
+                                "departureTime": "2025-04-22T16:41:00",
+                                "platform": 2,
+                                "crowded": 0.7275
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T16:50:00",
+                                "departureTime": "2025-04-22T16:50:00",
+                                "platform": 2,
+                                "crowded": 0.61
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T16:59:00",
+                                "departureTime": "2025-04-22T16:59:00",
+                                "platform": 2,
+                                "crowded": 0.54
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.775,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "15:03",
+                                "crowded": 0.0475,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "15:06",
+                                "crowded": 0.0925,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "15:12",
+                                "crowded": 0.1625,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "15:57",
+                                "crowded": 0.1675,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "16:05",
+                                "crowded": 0.2525,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "16:12",
+                                "crowded": 0.4225,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "16:15",
+                                "crowded": 0.6875,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "16:20",
+                                "crowded": 0.8125,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "16:35",
+                                "crowded": 0.775,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "16:41",
+                                "crowded": 0.7275,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "16:50",
+                                "crowded": 0.61,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "16:59",
+                                "crowded": 0.54,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "17:11",
+                                "crowded": 0.4175,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "17:30",
+                                "crowded": 0.34,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "17:41",
+                                "crowded": 0.16,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "17:50",
+                                "crowded": 0,
+                                "platform": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T17:04:00",
+                "arrivalTime": "2025-04-22T17:29:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 419,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T17:29:00",
+                        "departureTime": "2025-04-22T17:04:00",
+                        "stopStations": [],
+                        "handicap": 1,
+                        "crowded": 0.63,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1840,
+                                "arrivalTime": "14:59",
+                                "crowded": 0.1375,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1820,
+                                "arrivalTime": "15:06",
+                                "crowded": 0.1475,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "15:18",
+                                "crowded": 0.1725,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "15:25",
+                                "crowded": 0.2125,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "15:33",
+                                "crowded": 0.26,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "15:38",
+                                "crowded": 0.2875,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "15:44",
+                                "crowded": 0.325,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3100,
+                                "arrivalTime": "16:08",
+                                "crowded": 0.33,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "16:27",
+                                "crowded": 0.3225,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "16:35",
+                                "crowded": 0.365,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "16:43",
+                                "crowded": 0.445,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "16:45",
+                                "crowded": 0.6275,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "16:50",
+                                "crowded": 0.6975,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "17:04",
+                                "crowded": 0.63,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "17:29",
+                                "crowded": 0.495,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "17:53",
+                                "crowded": 0.21,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "18:02",
+                                "crowded": 0,
+                                "platform": 5
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T17:35:00",
+                "arrivalTime": "2025-04-22T18:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 41,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T18:11:00",
+                        "departureTime": "2025-04-22T17:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T17:41:00",
+                                "departureTime": "2025-04-22T17:41:00",
+                                "platform": 2,
+                                "crowded": 0.6925
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T17:50:00",
+                                "departureTime": "2025-04-22T17:50:00",
+                                "platform": 2,
+                                "crowded": 0.515
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T17:59:00",
+                                "departureTime": "2025-04-22T17:59:00",
+                                "platform": 2,
+                                "crowded": 0.43
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.74,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1600,
+                                "arrivalTime": "15:28",
+                                "crowded": 0.07,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1500,
+                                "arrivalTime": "15:35",
+                                "crowded": 0.1175,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "15:45",
+                                "crowded": 0.13,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "15:53",
+                                "crowded": 0.1475,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "16:01",
+                                "crowded": 0.175,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "16:06",
+                                "crowded": 0.2,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "16:12",
+                                "crowded": 0.24,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "16:57",
+                                "crowded": 0.245,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "17:05",
+                                "crowded": 0.3025,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "17:12",
+                                "crowded": 0.4325,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "17:15",
+                                "crowded": 0.7125,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "17:20",
+                                "crowded": 0.82,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "17:35",
+                                "crowded": 0.74,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "17:41",
+                                "crowded": 0.6925,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "17:50",
+                                "crowded": 0.515,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "17:59",
+                                "crowded": 0.43,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "18:11",
+                                "crowded": 0.34,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "18:30",
+                                "crowded": 0.2325,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "18:40",
+                                "crowded": 0.12,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "18:50",
+                                "crowded": 0,
+                                "platform": 2
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T18:04:00",
+                "arrivalTime": "2025-04-22T18:29:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 421,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T18:29:00",
+                        "departureTime": "2025-04-22T18:04:00",
+                        "stopStations": [],
+                        "handicap": 1,
+                        "crowded": 0.785,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1840,
+                                "arrivalTime": "15:59",
+                                "crowded": 0.1125,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1820,
+                                "arrivalTime": "16:06",
+                                "crowded": 0.12,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "16:18",
+                                "crowded": 0.1325,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "16:25",
+                                "crowded": 0.17,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "16:33",
+                                "crowded": 0.22,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "16:38",
+                                "crowded": 0.25,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "16:44",
+                                "crowded": 0.3075,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3100,
+                                "arrivalTime": "17:08",
+                                "crowded": 0.2975,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "17:27",
+                                "crowded": 0.3175,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "17:35",
+                                "crowded": 0.3825,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "17:43",
+                                "crowded": 0.485,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "17:45",
+                                "crowded": 0.7675,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "17:50",
+                                "crowded": 0.865,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "18:04",
+                                "crowded": 0.785,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "18:29",
+                                "crowded": 0.6325,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "18:53",
+                                "crowded": 0.2525,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 7320,
+                                "arrivalTime": "19:02",
+                                "crowded": 0,
+                                "platform": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T18:35:00",
+                "arrivalTime": "2025-04-22T19:11:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 43,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T19:11:00",
+                        "departureTime": "2025-04-22T18:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T18:41:00",
+                                "departureTime": "2025-04-22T18:41:00",
+                                "platform": 2,
+                                "crowded": 0.725
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T18:50:00",
+                                "departureTime": "2025-04-22T18:50:00",
+                                "platform": 2,
+                                "crowded": 0.545
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T18:59:00",
+                                "departureTime": "2025-04-22T18:59:00",
+                                "platform": 2,
+                                "crowded": 0.4525
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.7775,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1600,
+                                "arrivalTime": "16:28",
+                                "crowded": 0.0625,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1500,
+                                "arrivalTime": "16:35",
+                                "crowded": 0.09,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "16:45",
+                                "crowded": 0.095,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "16:53",
+                                "crowded": 0.125,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "17:01",
+                                "crowded": 0.1425,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "17:06",
+                                "crowded": 0.1725,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "17:12",
+                                "crowded": 0.235,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "17:57",
+                                "crowded": 0.2425,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "18:05",
+                                "crowded": 0.3125,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "18:12",
+                                "crowded": 0.45,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "18:15",
+                                "crowded": 0.75,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "18:20",
+                                "crowded": 0.8375,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "18:35",
+                                "crowded": 0.7775,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "18:41",
+                                "crowded": 0.725,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "18:50",
+                                "crowded": 0.545,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "18:59",
+                                "crowded": 0.4525,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "19:11",
+                                "crowded": 0.37,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "19:30",
+                                "crowded": 0.2775,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7300,
+                                "arrivalTime": "19:41",
+                                "crowded": 0,
+                                "platform": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T19:04:00",
+                "arrivalTime": "2025-04-22T19:29:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 423,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 1,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T19:29:00",
+                        "departureTime": "2025-04-22T19:04:00",
+                        "stopStations": [],
+                        "handicap": 1,
+                        "crowded": 0.14,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1840,
+                                "arrivalTime": "16:59",
+                                "crowded": 0.115,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1820,
+                                "arrivalTime": "17:06",
+                                "crowded": 0.125,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "17:18",
+                                "crowded": 0.1275,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "17:25",
+                                "crowded": 0.1625,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "17:33",
+                                "crowded": 0.1925,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "17:38",
+                                "crowded": 0.2075,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "17:44",
+                                "crowded": 0.255,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3100,
+                                "arrivalTime": "18:08",
+                                "crowded": 0.24,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "18:27",
+                                "crowded": 0.225,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "18:35",
+                                "crowded": 0.2475,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "18:43",
+                                "crowded": 0.2125,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "18:45",
+                                "crowded": 0.2275,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "18:50",
+                                "crowded": 0.24,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "19:04",
+                                "crowded": 0.14,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "19:29",
+                                "crowded": 0,
+                                "platform": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T19:35:00",
+                "arrivalTime": "2025-04-22T20:13:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 45,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T20:13:00",
+                        "departureTime": "2025-04-22T19:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T19:41:00",
+                                "departureTime": "2025-04-22T19:41:00",
+                                "platform": 2,
+                                "crowded": 0.2975
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T19:50:00",
+                                "departureTime": "2025-04-22T19:50:00",
+                                "platform": 2,
+                                "crowded": 0.2175
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T19:59:00",
+                                "departureTime": "2025-04-22T19:59:00",
+                                "platform": 2,
+                                "crowded": 0.1725
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.3325,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1600,
+                                "arrivalTime": "17:28",
+                                "crowded": 0.055,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1500,
+                                "arrivalTime": "17:35",
+                                "crowded": 0.08,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "17:45",
+                                "crowded": 0.0875,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "17:53",
+                                "crowded": 0.1075,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "18:01",
+                                "crowded": 0.1325,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "18:06",
+                                "crowded": 0.1525,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "18:12",
+                                "crowded": 0.1875,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "18:57",
+                                "crowded": 0.1775,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "19:05",
+                                "crowded": 0.2075,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "19:12",
+                                "crowded": 0.235,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "19:15",
+                                "crowded": 0.35,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "19:20",
+                                "crowded": 0.385,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "19:35",
+                                "crowded": 0.3325,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "19:41",
+                                "crowded": 0.2975,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "19:50",
+                                "crowded": 0.2175,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "19:59",
+                                "crowded": 0.1725,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "20:13",
+                                "crowded": 0.12,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "20:34",
+                                "crowded": 0,
+                                "platform": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T20:04:00",
+                "arrivalTime": "2025-04-22T20:29:00",
+                "freeSeats": 0,
+                "travelMessages": [
+                    {
+                        "trainNumber": 425,
+                        "sevirity": 2,
+                        "message": "Due to electrification work, this train will end its journey at Kiryat Gat station instead of Be\u0027er Sheva Center station.",
+                        "title": "Please note,"
+                    }
+                ],
+                "trains": [
+                    {
+                        "trainNumber": 425,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 2,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T20:29:00",
+                        "departureTime": "2025-04-22T20:04:00",
+                        "stopStations": [],
+                        "handicap": 1,
+                        "crowded": 0.0825,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1840,
+                                "arrivalTime": "17:59",
+                                "crowded": 0.095,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1820,
+                                "arrivalTime": "18:06",
+                                "crowded": 0.1,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "18:18",
+                                "crowded": 0.115,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "18:25",
+                                "crowded": 0.135,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "18:33",
+                                "crowded": 0.155,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "18:38",
+                                "crowded": 0.1775,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "18:44",
+                                "crowded": 0.2175,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3100,
+                                "arrivalTime": "19:08",
+                                "crowded": 0.2,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "19:27",
+                                "crowded": 0.1775,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "19:35",
+                                "crowded": 0.18,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "19:43",
+                                "crowded": 0.145,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "19:45",
+                                "crowded": 0.1525,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "19:50",
+                                "crowded": 0.1475,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "20:04",
+                                "crowded": 0.0825,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "20:29",
+                                "crowded": 0,
+                                "platform": 2
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T20:35:00",
+                "arrivalTime": "2025-04-22T21:13:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 47,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T21:13:00",
+                        "departureTime": "2025-04-22T20:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T20:41:00",
+                                "departureTime": "2025-04-22T20:41:00",
+                                "platform": 2,
+                                "crowded": 0.29
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T20:50:00",
+                                "departureTime": "2025-04-22T20:50:00",
+                                "platform": 2,
+                                "crowded": 0.2225
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T20:59:00",
+                                "departureTime": "2025-04-22T20:59:00",
+                                "platform": 2,
+                                "crowded": 0.1825
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.315,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 1600,
+                                "arrivalTime": "18:28",
+                                "crowded": 0.05,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 1500,
+                                "arrivalTime": "18:35",
+                                "crowded": 0.0675,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 1400,
+                                "arrivalTime": "18:45",
+                                "crowded": 0.0825,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 1220,
+                                "arrivalTime": "18:53",
+                                "crowded": 0.115,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2100,
+                                "arrivalTime": "19:01",
+                                "crowded": 0.1425,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 2200,
+                                "arrivalTime": "19:06",
+                                "crowded": 0.1675,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 2300,
+                                "arrivalTime": "19:12",
+                                "crowded": 0.21,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3500,
+                                "arrivalTime": "19:57",
+                                "crowded": 0.1925,
+                                "platform": 4
+                            },
+                            {
+                                "stationId": 3600,
+                                "arrivalTime": "20:05",
+                                "crowded": 0.235,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "20:12",
+                                "crowded": 0.2475,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "20:15",
+                                "crowded": 0.3275,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "20:20",
+                                "crowded": 0.3625,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "20:35",
+                                "crowded": 0.315,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "20:41",
+                                "crowded": 0.29,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "20:50",
+                                "crowded": 0.2225,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "20:59",
+                                "crowded": 0.1825,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "21:13",
+                                "crowded": 0.11,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "21:34",
+                                "crowded": 0,
+                                "platform": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T21:35:00",
+                "arrivalTime": "2025-04-22T22:13:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 49,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T22:13:00",
+                        "departureTime": "2025-04-22T21:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T21:41:00",
+                                "departureTime": "2025-04-22T21:41:00",
+                                "platform": 2,
+                                "crowded": 0.1825
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T21:50:00",
+                                "departureTime": "2025-04-22T21:50:00",
+                                "platform": 2,
+                                "crowded": 0.1475
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T21:59:00",
+                                "departureTime": "2025-04-22T21:59:00",
+                                "platform": 2,
+                                "crowded": 0.1275
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.1925,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "21:12",
+                                "crowded": 0.0475,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "21:15",
+                                "crowded": 0.1625,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "21:20",
+                                "crowded": 0.1925,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "21:35",
+                                "crowded": 0.1925,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "21:41",
+                                "crowded": 0.1825,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "21:50",
+                                "crowded": 0.1475,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "21:59",
+                                "crowded": 0.1275,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "22:13",
+                                "crowded": 0.0575,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "22:34",
+                                "crowded": 0,
+                                "platform": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T22:35:00",
+                "arrivalTime": "2025-04-22T23:13:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 51,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-22T23:13:00",
+                        "departureTime": "2025-04-22T22:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T22:41:00",
+                                "departureTime": "2025-04-22T22:41:00",
+                                "platform": 2,
+                                "crowded": 0.125
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T22:50:00",
+                                "departureTime": "2025-04-22T22:50:00",
+                                "platform": 2,
+                                "crowded": 0.1025
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T22:59:00",
+                                "departureTime": "2025-04-22T22:59:00",
+                                "platform": 2,
+                                "crowded": 0.0775
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.135,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "22:09",
+                                "crowded": 0.0425,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "22:12",
+                                "crowded": 0.1225,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "22:18",
+                                "crowded": 0.15,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "22:35",
+                                "crowded": 0.135,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "22:41",
+                                "crowded": 0.125,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "22:50",
+                                "crowded": 0.1025,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "22:59",
+                                "crowded": 0.0775,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "23:13",
+                                "crowded": 0.035,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "23:34",
+                                "crowded": 0,
+                                "platform": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "departureTime": "2025-04-22T23:35:00",
+                "arrivalTime": "2025-04-23T00:13:00",
+                "freeSeats": 0,
+                "travelMessages": [],
+                "trains": [
+                    {
+                        "trainNumber": 53,
+                        "orignStation": 5000,
+                        "destinationStation": 7000,
+                        "originPlatform": 1,
+                        "destPlatform": 3,
+                        "freeSeats": 0,
+                        "arrivalTime": "2025-04-23T00:13:00",
+                        "departureTime": "2025-04-22T23:35:00",
+                        "stopStations": [
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "2025-04-22T23:41:00",
+                                "departureTime": "2025-04-22T23:41:00",
+                                "platform": 2,
+                                "crowded": 0.0825
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "2025-04-22T23:50:00",
+                                "departureTime": "2025-04-22T23:50:00",
+                                "platform": 2,
+                                "crowded": 0.0675
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "2025-04-22T23:59:00",
+                                "departureTime": "2025-04-22T23:59:00",
+                                "platform": 2,
+                                "crowded": 0.055
+                            }
+                        ],
+                        "handicap": 1,
+                        "crowded": 0.085,
+                        "trainPosition": null,
+                        "routeStations": [
+                            {
+                                "stationId": 3700,
+                                "arrivalTime": "23:09",
+                                "crowded": 0.025,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 4600,
+                                "arrivalTime": "23:12",
+                                "crowded": 0.0625,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 4900,
+                                "arrivalTime": "23:18",
+                                "crowded": 0.08,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 5000,
+                                "arrivalTime": "23:35",
+                                "crowded": 0.085,
+                                "platform": 1
+                            },
+                            {
+                                "stationId": 5010,
+                                "arrivalTime": "23:41",
+                                "crowded": 0.0825,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6900,
+                                "arrivalTime": "23:50",
+                                "crowded": 0.0675,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 6150,
+                                "arrivalTime": "23:59",
+                                "crowded": 0.055,
+                                "platform": 2
+                            },
+                            {
+                                "stationId": 7000,
+                                "arrivalTime": "00:13",
+                                "crowded": 0.0225,
+                                "platform": 3
+                            },
+                            {
+                                "stationId": 8550,
+                                "arrivalTime": "00:34",
+                                "crowded": 0,
+                                "platform": 1
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
