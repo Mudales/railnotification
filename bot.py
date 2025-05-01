@@ -1,30 +1,30 @@
 from decouple import config
-import re
-from telebot import types
-from telebot.types import KeyboardButton
 import telebot
+import rail_req
+
+# print(rail_req.response)
 
 
-api_key = config("api_key")
-bot = telebot.TeleBot(api_key)
+BOT_API = config("BOT_API")
+bot = telebot.TeleBot(BOT_API) # type: ignore
 
-
-button1 = KeyboardButton("choose Catgegory")
 
 @bot.message_handler(commands=['start', 'hello', 'help'])
 def send_welcome(message):
-    bot.reply_to(message, "Hi, i'am bot that will help you to get a name for phone number")
+    bot.reply_to(message, "Hi, i'am bot Rail lates ")
+
+@bot.message_handler(commands=['times'])
+def phone(message):
+    bot.reply_to(message, f"this the time of the train: {rail_req.main()}")
+    # bot.send_message(message.chat.id, f"this the time of the train: {rail_req.main()}")
+    
+
+
 
 @bot.message_handler()
-def phone(message):
-    button1 = KeyboardButton("choose Catgegory")
-    pattern = "^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$"
-    if re.match(pattern, str(message.text)):
-        response_api = Response_me_api(number=message.text, accessnumber='972539567647')
-        bot.reply_to(message, response_api.result)
-    else:
-        bot.reply_to(message, 'send me 9 or 10 digit phone number ')
-        print(message)
-
-
+def genric_reply(message):
+    bot.reply_to(message, "hi there, i am a bot")
+    bot.reply_to(message, "how can i help you?")
+ 
+ 
 bot.infinity_polling()

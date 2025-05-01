@@ -1,8 +1,7 @@
 import json
-import os
 from datetime import datetime, timedelta
 
-def find_closest_trains(file_path, target_time_str):
+def find_closest_trains(data, target_time_str):
     """
     Reads train data from a JSON file, extracts specific fields, and finds
     up to 3 trains closest to the target departure time.
@@ -22,17 +21,11 @@ def find_closest_trains(file_path, target_time_str):
     """
     all_trains_data = []
     target_dt = None # Initialize target datetime object
-
+    # print(f"data: {data.json()}")
     try:
-        # --- 1. Load and Parse JSON ---
-        if not os.path.exists(file_path):
-            print(f"Error: File not found at '{file_path}'")
-            return None
+        json_data = json.loads(data) # Assuming 'data' is a JSON string
 
-        with open(file_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-
-        travels = data.get('result', {}).get('travels', [])
+        travels = json_data.get('result', {}).get('travels', [])
         if not travels:
             print("Info: No 'travels' data found in the JSON file.")
             return [] # Return empty list if no travel data
@@ -98,6 +91,7 @@ def find_closest_trains(file_path, target_time_str):
                 }
 
             all_trains_data.append(train_info)
+            break
 
         if not all_trains_data:
              print("Info: No valid train data extracted from the file.")
@@ -138,13 +132,9 @@ def find_closest_trains(file_path, target_time_str):
 
         return closest_trains
 
-    # --- Error Handling ---
-    except FileNotFoundError:
-        # Already handled above, but catch again just in case
-        print(f"Error: File not found at '{file_path}'")
-        return None
+
     except json.JSONDecodeError as e:
-        print(f"Error: Failed to parse JSON file '{file_path}'. Invalid JSON format.")
+        print(f"Error: Failed to parse JSON file '{data}'. Invalid JSON format.")
         print(f"Details: {e}")
         return None
     except (KeyError, IndexError) as e:
@@ -154,32 +144,32 @@ def find_closest_trains(file_path, target_time_str):
         print(f"Error: Problem with time format or value: {e}")
         return None
     except Exception as e:
-        print(f"An unexpected error occurred while processing '{file_path}': {e}")
+        print(f"An unexpected error occurred while processing '{data}': {e}")
         return None
 
 # --- How to Use ---
 
-# 1. Make sure 'response.json' is in the same directory as your script,
-#    or provide the full path.
-json_file = 'response.json'
-# 2. Choose your target time
-target_time = "11:45" # Example Target Time
+# # 1. Make sure 'response.json' is in the same directory as your script,
+# #    or provide the full path.
+# json_file = 'response.json'
+# # 2. Choose your target time
+# target_time = "11:45" # Example Target Time
 
-# 3. Call the function
-results = find_closest_trains(json_file, target_time)
+# # 3. Call the function
+# results = find_closest_trains(json_file, target_time)
 
-# 4. Print the results
-if results is not None:
-    if results:
-        print(f"\nFound {len(results)} closest trains to target time {target_time}:")
-        for i, train in enumerate(results):
-            print(f"\n--- Train {i+1} ---")
-            # Use json.dumps for pretty printing the dictionary
-            print(json.dumps(train, indent=4, default=str)) # default=str handles datetime if it wasn't removed
-    else:
-        print(f"\nNo trains found matching the time criteria around {target_time}.")
-else:
-    print("\nAn error occurred during processing.")
+# # 4. Print the results
+# if results is not None:
+#     if results:
+#         print(f"\nFound {len(results)} closest trains to target time {target_time}:")
+#         for i, train in enumerate(results):
+#             print(f"\n--- Train {i+1} ---")
+#             # Use json.dumps for pretty printing the dictionary
+#             print(json.dumps(train, indent=4, default=str)) # default=str handles datetime if it wasn't removed
+#     else:
+#         print(f"\nNo trains found matching the time criteria around {target_time}.")
+# else:
+#     print("\nAn error occurred during processing.")
 
 # Example 2: Different time
 # target_time_2 = "18:00"
