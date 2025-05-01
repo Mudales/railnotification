@@ -1,3 +1,4 @@
+from textwrap import indent
 import requests
 import json # Still useful if the response is JSON
 # from data_parser import response_parse # Assuming this is the correct import path   
@@ -68,7 +69,7 @@ def main():
 
         try:
             response_parsed_data = data.find_closest_trains(data=json_format, target_time_str="10:52")
-            print(json.dumps(response_parsed_data))# Assuming this function is defined in data_parser.py
+            print(json.dumps(response_parsed_data , indent=4))# Assuming this function is defined in data_parser.py
             return response_parsed_data
             # return json.dumps(response_parsed_data, indent=4) # Pretty print the parsed data
         except json.JSONDecodeError:
