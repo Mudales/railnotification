@@ -55,4 +55,3 @@ def response_parse(data):
         extracted_trains.append(train_info)
 
     return extracted_trains
-
