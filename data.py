@@ -21,11 +21,9 @@ def find_closest_trains(data, target_time_str):
     """
     all_trains_data = []
     target_dt = None # Initialize target datetime object
-    # print(f"data: {data.json()}")
-    try:
-        json_data = json.loads(data) # Assuming 'data' is a JSON string
 
-        travels = json_data.get('result', {}).get('travels', [])
+    try:
+        travels = data.get('result', {}).get('travels', [])
         if not travels:
             print("Info: No 'travels' data found in the JSON file.")
             return [] # Return empty list if no travel data
@@ -91,7 +89,6 @@ def find_closest_trains(data, target_time_str):
                 }
 
             all_trains_data.append(train_info)
-            break
 
         if not all_trains_data:
              print("Info: No valid train data extracted from the file.")
@@ -130,6 +127,8 @@ def find_closest_trains(data, target_time_str):
         for train in closest_trains:
             del train["departureDateTime"]
 
+        print(f"Info: Found {len(closest_trains)} closest trains to target time {target_time_str}.")
+        # --- 7. Return the result ---
         return closest_trains
 
 
@@ -144,7 +143,7 @@ def find_closest_trains(data, target_time_str):
         print(f"Error: Problem with time format or value: {e}")
         return None
     except Exception as e:
-        print(f"An unexpected error occurred while processing '{data}': {e}")
+        print(f"An unexpected error occurred while processing: {e}")
         return None
 
 # --- How to Use ---
