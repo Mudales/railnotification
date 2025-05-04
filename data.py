@@ -145,39 +145,3 @@ def find_closest_trains(data, target_time_str):
     except Exception as e:
         print(f"An unexpected error occurred while processing: {e}")
         return None
-
-# --- How to Use ---
-
-# # 1. Make sure 'response.json' is in the same directory as your script,
-# #    or provide the full path.
-# json_file = 'response.json'
-# # 2. Choose your target time
-# target_time = "11:45" # Example Target Time
-
-# # 3. Call the function
-# results = find_closest_trains(json_file, target_time)
-
-# # 4. Print the results
-# if results is not None:
-#     if results:
-#         print(f"\nFound {len(results)} closest trains to target time {target_time}:")
-#         for i, train in enumerate(results):
-#             print(f"\n--- Train {i+1} ---")
-#             # Use json.dumps for pretty printing the dictionary
-#             print(json.dumps(train, indent=4, default=str)) # default=str handles datetime if it wasn't removed
-#     else:
-#         print(f"\nNo trains found matching the time criteria around {target_time}.")
-# else:
-#     print("\nAn error occurred during processing.")
-
-# Example 2: Different time
-# target_time_2 = "18:00"
-# results_2 = find_closest_trains(json_file, target_time_2)
-# if results_2 is not None:
-#      if results_2:
-#         print(f"\nFound {len(results_2)} closest trains to target time {target_time_2}:")
-#         for i, train in enumerate(results_2):
-#             print(f"\n--- Train {i+1} ---")
-#             print(json.dumps(train, indent=4, default=str))
-#      else:
-#         print(f"\nNo trains found matching the time criteria around {target_time_2}.")
