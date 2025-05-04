@@ -5,8 +5,6 @@ import datetime
 import platform
 import types 
 
-
-
 # Define your API details
 API_KEY = "4b0d355121fe4e0bb3d86e902efe9f20" # Use your actual API key
 API_BASE = 'https://israelrail.azurefd.net/rjpa-prod/api/v1'
@@ -58,26 +56,6 @@ def get_formatted_datetime():
 
 
 
-# def simple_get_request(url: str, params: dict = None, headers: dict = None):
-#     try:
-#         response = requests.get(
-#             url,
-#             params=params,
-#             headers=headers
-#         )
-#         print(f"Request finished with Status Code: {response.status_code}")
-
-#         return response
-
-#     except requests.exceptions.RequestException as e:
-#         print(f"Error making request: {e}")
-#         return None
-#     except Exception as e:
-#         print(f"An unexpected error occurred: {e}")
-#         return None
-
-# # --- Example Usage based on your previous context ---
-
 
 # Define the headers
 def main(fromStation: int = 5000, toStation: int = 7000):
@@ -85,16 +63,22 @@ def main(fromStation: int = 5000, toStation: int = 7000):
     'User-Agent': USER_AGENT,
     "ocp-apim-subscription-key": API_KEY # Make sure this key is valid for the API
     }
+
+        # --- Get current time ONCE ---
+    current_dt = get_formatted_datetime()
+    current_date = current_dt.date
+    current_time = current_dt.time
     
     params = {
     'fromStation': fromStation,
     'toStation': toStation,
-    'date': get_formatted_datetime().date,
-    'hour': get_formatted_datetime().time,
+    'date': current_dt.date,
+    'hour': current_dt.time,
     'scheduleType': 1,
     'systemType': 2,
     'languageId': 'English'
     }
+
 
 
     # Make the GET request using the simplified function
@@ -111,7 +95,7 @@ def main(fromStation: int = 5000, toStation: int = 7000):
         print(response.status_code)  
 
         try:
-            response_parsed_data = data.find_closest_trains(data=response.json(), target_time_str=get_formatted_datetime().time) # Assuming this function is defined in data.py
+            response_parsed_data = data.find_closest_trains(data=response.json(), target_time_str=current_dt.time) # Assuming this function is defined in data.py
             # print(json.dumps(response_parsed_data, indent=4)) # Pretty print the result if it's a dictionary or list
             return json.dumps(response_parsed_data, indent=4) # Return the parsed data as a JSON string
         except json.JSONDecodeError:
