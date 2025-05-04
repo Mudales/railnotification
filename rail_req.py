@@ -129,5 +129,5 @@ def main(fromStation: int = 5000, toStation: int = 7000):
 if __name__ == "__main__":
     # Call the main function to execute the request and print the result
     result = main()
-   
+    print(result)
     # print(json.dumps(result, indent=4)) # Pretty print the result if it's a dictionary or list
