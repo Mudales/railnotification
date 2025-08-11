@@ -6,9 +6,9 @@ import platform
 import types 
 
 # Define your API details
-API_KEY = "4b0d355121fe4e0bb3d86e902efe9f20" # Use your actual API key
-API_BASE = 'https://israelrail.azurefd.net/rjpa-prod/api/v1'
-USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15'
+API_KEY = "5e64d66cf03f4547bcac5de2de06b566" # Use your actual API key
+API_BASE = 'https://rail-api.rail.co.il/rjpa/api/v1'
+USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36'
 
 # Define the endpoint
 endpoint = '/timetable/searchTrainLuzForDateTime'
