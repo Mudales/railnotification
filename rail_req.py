@@ -1,117 +1,121 @@
 import requests
-import json # Still useful if the response is JSON
+import json
 import data
 import datetime
 import platform
 import types 
 
 # Define your API details
-API_KEY = "5e64d66cf03f4547bcac5de2de06b566" # Use your actual API key
+API_KEY = "5e64d66cf03f4547bcac5de2de06b566"
 API_BASE = 'https://rail-api.rail.co.il/rjpa/api/v1'
-USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36'
 
 # Define the endpoint
-endpoint = '/timetable/searchTrainLuzForDateTime'
+endpoint = '/timetable/searchTrain'
 url = f"{API_BASE}{endpoint}"
 
 
 def get_formatted_datetime():
-  """
-  Gets the current date and time and returns an object
-  with formatted 'date' and 'time' attributes.
+    """
+    Gets the current date and time and returns an object
+    with formatted 'date' and 'time' attributes.
 
-  Access the formatted parts using .date or .time on the returned object.
+    Access the formatted parts using .date or .time on the returned object.
 
-  Returns:
-      types.SimpleNamespace: An object with attributes:
-                               - date (str): Formatted as "YYYY-MM-D" (e.g., "2025-05-1")
-                               - time (str): Formatted as "HH:MM" (e.g., "11:23")
-  """
-  now = datetime.datetime.now()
+    Returns:
+        types.SimpleNamespace: An object with attributes:
+                                 - date (str): Formatted as "YYYY-MM-DD" (e.g., "2025-12-02")
+                                 - time (str): Formatted as "HH:MM" (e.g., "11:23")
+    """
+    now = datetime.datetime.now()
 
-  # --- Format Time ---
-  # %H: Hour (24-hour clock, zero-padded)
-  # %M: Minute (zero-padded)
-  formatted_time = now.strftime("%H:%M")
+    # --- Format Time ---
+    formatted_time = now.strftime("%H:%M")
 
-  # --- Format Date ---
-  # %Y: Year with century
-  # %m: Month as a zero-padded decimal number
-  # %-d: Day of the month as a decimal number (no padding on Linux/macOS)
-  # %#d: Day of the month as a decimal number (no padding on Windows)
+    # --- Format Date ---
+    # API expects YYYY-MM-DD format (with zero-padded day)
+    formatted_date = now.strftime("%Y-%m-%d")
 
-  # Choose the correct non-padded day format code based on OS
-  if platform.system() == "Windows":
-      day_format_code = "%#d"
-  else: # Linux, macOS, other POSIX
-      day_format_code = "%-d"
-
-  # Construct the full format string for the date
-  date_format_string = f"%Y-%m-{day_format_code}"
-  formatted_date = now.strftime(date_format_string)
-
-  # --- Create and return the object ---
-  # SimpleNamespace allows creating an object with arbitrary attributes
-  return types.SimpleNamespace(date=formatted_date, time=formatted_time)
+    return types.SimpleNamespace(date=formatted_date, time=formatted_time)
 
 
-
-
-# Define the headers
 def main(fromStation: int = 5000, toStation: int = 7000):
+    # Headers that mimic a real browser
     headers = {
-    'User-Agent': USER_AGENT,
-    "ocp-apim-subscription-key": API_KEY # Make sure this key is valid for the API
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'en-US,en;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Content-Type': 'application/json',
+        'ocp-apim-subscription-key': API_KEY,
+        'Origin': 'https://www.rail.co.il',
+        'Referer': 'https://www.rail.co.il/',
+        'sec-ch-ua': '"Chromium";v="142", "Not_A Brand";v="99"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-site',
+        'DNT': '1'
     }
 
-        # --- Get current time ONCE ---
+    # --- Get current time ONCE ---
     current_dt = get_formatted_datetime()
-    current_date = current_dt.date
-    current_time = current_dt.time
     
-    params = {
-    'fromStation': fromStation,
-    'toStation': toStation,
-    'date': current_dt.date,
-    'hour': current_dt.time,
-    'scheduleType': 1,
-    'systemType': 2,
-    'languageId': 'English'
+    # Payload as dictionary (matches the API structure from your browser example)
+    payload = {
+        "methodName": "searchTrainLuzForDateTime",
+        "fromStation": fromStation,
+        "toStation": toStation,
+        "date": current_dt.date,
+        "hour": current_dt.time,
+        "systemType": "2",
+        "scheduleType": "ByDeparture",
+        "languageId": "English",
+        "requestLocation": "{\"latitude\":\"0.0\",\"longitude\":\"0.0\"}",
+        "requestIP": "0.0.0.0",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "screenResolution": "{\"height\":800,\"width\":1280}",
+        "searchFromFavorites": False
     }
 
-
-
-    # Make the GET request using the simplified function
-    response = requests.get(
+    # Make the POST request with JSON payload
+    try:
+        response = requests.post(
             url,
-            params=params,
-            headers=headers
+            json=payload,  # Use json= instead of params=
+            headers=headers,
+            timeout=30
         )
+        
+        print(f"Response Status: {response.status_code}")
+        
+        # Process the response
+        if response.status_code == 200:
+            try:
+                response_parsed_data = data.find_closest_trains(
+                    data=response.json(), 
+                    target_time_str=current_dt.time
+                )
+                print(json.dumps(response_parsed_data, indent=4))
+                return json.dumps(response_parsed_data, indent=4)
+            except json.JSONDecodeError:
+                print("\nResponse was not in JSON format.")
+                print(f"Raw response: {response.text[:500]}")  # Print first 500 chars
+                return "\nResponse was not in JSON format."
+            except Exception as e:
+                print(f"An error occurred while processing the response: {e}")
+                return str(e)
+        else:
+            print(f"\nFailed to get a successful response. Status: {response.status_code}")
+            print(f"Response text: {response.text[:500]}")
+            return f"\nFailed to get a response. Status: {response.status_code}"
+            
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+        return f"Request failed: {e}"
 
-    # Process the response
-    if response and response.status_code == 200:
-        # You can access response details like:
-        # response.status_code, response.headers, response.text, etc.
-        print(response.status_code)  
 
-        try:
-            response_parsed_data = data.find_closest_trains(data=response.json(), target_time_str=current_dt.time) # Assuming this function is defined in data.py
-            # print(json.dumps(response_parsed_data, indent=4)) # Pretty print the result if it's a dictionary or list
-            return json.dumps(response_parsed_data, indent=4) # Return the parsed data as a JSON string
-        except json.JSONDecodeError:
-            print("\nResponse was not in JSON format.")
-            # print(response.text) 
-            return "\nResponse was not in JSON format." # Print the raw text if not JSON
-        except Exception as e:
-            print(f"An error occurred while processing the response: {e}")
-            return e
-
-    else:
-        # print("\nFailed to get a response.")
-        return "\nFailed to get a response."
-    
 if __name__ == "__main__":
     # Call the main function to execute the request and print the result
     result = main()
     print(result)
-    # print(json.dumps(result, indent=4)) # Pretty print the result if it's a dictionary or list
