@@ -2,33 +2,27 @@
 
 FROM cgr.dev/chainguard/python:latest-dev as dev
 
-# Use nonroot's home directory instead of /app
-WORKDIR /home/nonroot/app
+WORKDIR /home/nonroot
 
-# Create virtual environment
-RUN python -m venv venv
-ENV PATH="/home/nonroot/app/venv/bin:$PATH"
+# Install packages directly (no venv needed)
+COPY requirements.txt .
+RUN pip install --user -r requirements.txt
 
-# Copy and install requirements
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-
-# Stage 2: Minimal runtime
+# Stage 2: Runtime
 FROM cgr.dev/chainguard/python:latest
 
 WORKDIR /home/nonroot/app
 
+# Copy installed packages from nonroot's .local
+COPY --from=dev /home/nonroot/.local /home/nonroot/.local
+
 # Copy application files
-COPY bot.py bot.py
-COPY data.py data.py
+COPY bot.py .
+COPY data.py .
 
-# Copy virtual environment from dev stage
-COPY --from=dev /home/nonroot/app/venv /home/nonroot/app/venv
-
-# Set PATH to use venv
-ENV PATH="/home/nonroot/app/venv/bin:$PATH"
-
-# Set timezone to Israel
+# Set PATH to include user packages
+ENV PATH="/home/nonroot/.local/bin:$PATH"
+ENV PYTHONPATH="/home/nonroot/.local/lib/python3.12/site-packages:$PYTHONPATH"
 ENV TZ=Asia/Jerusalem
 
 # Run the bot
