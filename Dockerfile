@@ -1,29 +1,34 @@
-# Stage 1: Build environment with pip
-FROM cgr.dev/chainguard/python:latest-dev AS build
+# syntax=docker/dockerfile:1
+
+FROM cgr.dev/chainguard/python:latest-dev as dev
 
 WORKDIR /app
 
-# Copy requirements.txt and install dependencies
-COPY requirements.txt .
+# Create virtual environment
+RUN python -m venv venv
+ENV PATH="/app/venv/bin:$PATH"
 
-# Install dependencies to a specific location
-RUN pip install --no-cache-dir --user -r requirements.txt
+# Copy and install requirements
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
-# Stage 2: Minimal runtime environment
-FROM cgr.dev/chainguard/python:latest AS runtime
+# Stage 2: Minimal runtime
+FROM cgr.dev/chainguard/python:latest
 
 WORKDIR /app
 
-# Copy Python packages from build stage
-# The --user flag installs to ~/.local, so we copy that
-COPY --from=build /home/nonroot/.local /home/nonroot/.local
+# Copy ALL Python application files
+COPY *.py ./
+COPY .env .env
 
-# Copy application code
-COPY . .
+# Copy virtual environment from dev stage
+COPY --from=dev /app/venv /app/venv
 
-# Make sure Python can find the installed packages
-ENV PATH=/home/nonroot/.local/bin:$PATH
-ENV PYTHONPATH=/home/nonroot/.local/lib/python3.12/site-packages:$PYTHONPATH
+# Set PATH to use venv
+ENV PATH="/app/venv/bin:$PATH"
+
+# Set timezone to Israel
+ENV TZ=Asia/Jerusalem
 
 # Run the bot
-CMD ["python", "/app/bot.py"]
+ENTRYPOINT ["python", "bot.py"]

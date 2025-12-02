@@ -2,8 +2,9 @@ import requests
 import json
 import data
 import datetime
-import platform
+# import platform
 import types 
+import pytz
 
 # Define your API details
 API_KEY = "5e64d66cf03f4547bcac5de2de06b566"
@@ -26,7 +27,9 @@ def get_formatted_datetime():
                                  - date (str): Formatted as "YYYY-MM-DD" (e.g., "2025-12-02")
                                  - time (str): Formatted as "HH:MM" (e.g., "11:23")
     """
-    now = datetime.datetime.now()
+
+    israel_tz = pytz.timezone('Asia/Jerusalem')
+    now = datetime.datetime.now(israel_tz)
 
     # --- Format Time ---
     formatted_time = now.strftime("%H:%M")
