@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  rail-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rail-notification-bot
+    restart: always
+    environment:
+      - TZ=Asia/Jerusalem
+      - PYTHONUNBUFFERED=1
+    # אל תוסיף command: פה אם זה כותב משהו אחר!
