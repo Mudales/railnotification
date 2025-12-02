@@ -17,8 +17,8 @@ WORKDIR /home/nonroot/app
 COPY --from=dev /home/nonroot/.local /home/nonroot/.local
 
 # Copy application files
-COPY *.py .
-COPY .env .
+COPY *.py ./
+COPY .env .env
 
 # Set PATH to include user packages
 ENV PATH="/home/nonroot/.local/bin:$PATH"
