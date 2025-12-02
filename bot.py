@@ -114,7 +114,7 @@ def format_train_times_html(train_data, origin_code, dest_code):
 @bot.message_handler(commands=['start', 'hello', 'help'])
 @restricted_access # <--- Apply decorator
 def send_welcome(message):
-    bot.reply_to(message, "Hi, I am the Rail Lates Bot. How can I assist you?")
+    bot.reply_to(message, "Hi, I am the Rail Lates Bot. How can I assist you?\nsend /times to get Keyboard")
 
 @bot.message_handler(commands=['times'])
 @restricted_access # <--- Apply decorator
