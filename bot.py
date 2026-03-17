@@ -61,7 +61,7 @@ def station_name(code):
     s = STATIONS.get(code)
     if not s:
         return f"Station {code}"
-    return f"{s['Heb']} ({s['Eng']})"
+    return s['Eng']
 
 
 def gen_reply_keyboard():
@@ -84,9 +84,9 @@ def format_train_times_html(train_data, origin_code, dest_code):
     if not train_data:
         return f"😕 No upcoming trains from <b>{origin_name}</b> to <b>{dest_name}</b>."
 
-    lines = [f"🚂 <b>{origin_name} → {dest_name}</b>\n"]
+    lines = [f"🚂 <b>{origin_name} → {dest_name}</b>\n{'━' * 24}"]
 
-    for train in train_data:
+    for i, train in enumerate(train_data):
         try:
             dep_dt = datetime.datetime.fromisoformat(train['departureTime'])
             arr_dt = datetime.datetime.fromisoformat(train['arrivalTime'])
@@ -102,21 +102,30 @@ def format_train_times_html(train_data, origin_code, dest_code):
                 delay_minutes = position['calcDiffMinutes'] or 0
 
             if delay_minutes > 0:
+                status = "🔴 LATE"
                 delayed_dep = dep_dt + datetime.timedelta(minutes=delay_minutes)
                 delayed_dep_time = delayed_dep.strftime('%H:%M')
-                dep_display = f"<s>{dep_time}</s> <b>{delayed_dep_time}</b> <i>(+{delay_minutes} min)</i>"
+                dep_display = f"<s>{dep_time}</s>  <b><u>{delayed_dep_time}</u></b>"
                 delayed_arr = arr_dt + datetime.timedelta(minutes=delay_minutes)
                 delayed_arr_time = delayed_arr.strftime('%H:%M')
-                arr_display = f"<s>{arr_time}</s> <b>{delayed_arr_time}</b>"
+                arr_display = f"<s>{arr_time}</s>  <b><u>{delayed_arr_time}</u></b>"
+                delay_badge = f"  ⚠️ <b><i>+{delay_minutes} min delay</i></b>"
             else:
+                status = "🟢 On Time"
                 dep_display = f"<b>{dep_time}</b>"
                 arr_display = f"<b>{arr_time}</b>"
+                delay_badge = ""
 
             line = (
-                f"<b>Train #{train_num}</b>\n"
-                f"  🕐 Departs: {dep_display}  •  Platform {dep_platform}\n"
-                f"  🏁 Arrives: {arr_display}"
+                f"{status}  |  <b>Train #{train_num}</b>{delay_badge}\n"
+                f"  🕐 Departs:  {dep_display}\n"
+                f"  🏁 Arrives:    {arr_display}\n"
+                f"  🚏 Platform:  <b>{dep_platform}</b>"
             )
+
+            if i < len(train_data) - 1:
+                line += f"\n{'─' * 24}"
+
             lines.append(line)
         except Exception as e:
             print(f"Error formatting train: {e} - {train}")
