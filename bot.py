@@ -1,169 +1,181 @@
 from decouple import config
 import telebot
-from telebot.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 import json
 import datetime
-import platform
-import functools # Import functools for the decorator
+import functools
 
 import rail_req
 
 BOT_API = config("BOT_API")
 bot = telebot.TeleBot(BOT_API)
 
-# --- !!! --- Configuration: Allowed User IDs --- !!! ---
-# Replace these example IDs with the actual Telegram User IDs you want to allow.
-# Get user IDs from bots like @userinfobot
+# --- Access Control ---
 allowed_ids_str = config('ALLOWED_TELEGRAM_IDS', default='')
 ALLOWED_USER_IDS = {
     int(id_str.strip())
     for id_str in allowed_ids_str.split(',')
-    if id_str.strip().isdigit() # Ensure it's a digit before converting
+    if id_str.strip().isdigit()
 }
 
-# --- !!! ------------------------------------------ !!! ---
+STATIONS = {
+    5000: {'Heb': 'לוד', 'Eng': 'Lod'},
+    7000: {'Heb': 'קריית גת', 'Eng': 'Kiryat Gat'},
+    4600: {'Heb': 'תל אביב - השלום', 'Eng': 'HaShalom'},
+}
+
+# Button text → (origin, dest)
+BUTTON_LOD_TO_GAT = "Lod → Kiryat Gat"
+BUTTON_GAT_TO_LOD = "Kiryat Gat → Lod"
+BUTTON_LOD_TO_HASHALOM = "Lod → HaShalom"
+BUTTON_HASHALOM_TO_LOD = "HaShalom → Lod"
+
+BUTTON_ROUTES = {
+    BUTTON_LOD_TO_GAT: (5000, 7000),
+    BUTTON_GAT_TO_LOD: (7000, 5000),
+    BUTTON_LOD_TO_HASHALOM: (5000, 4600),
+    BUTTON_HASHALOM_TO_LOD: (4600, 5000),
+}
 
 
-# --- Decorator Function for Access Control ---
 def restricted_access(func):
-    """
-    Decorator that restricts access to bot handlers to allowed user IDs.
-    """
-    @functools.wraps(func) # Preserves function metadata
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        # Extract the message or call object from the arguments
-        # Handlers usually receive 'message' or 'call' as the first argument
         update_obj = args[0]
-
         user_id = None
-        user_info_str = "Unknown user" # For logging
 
         if isinstance(update_obj, telebot.types.Message):
             user_id = update_obj.from_user.id
-            username = update_obj.from_user.username
-            user_info_str = f"User {user_id} (@{username})"
         elif isinstance(update_obj, telebot.types.CallbackQuery):
             user_id = update_obj.from_user.id
-            username = update_obj.from_user.username
-            user_info_str = f"User {user_id} (@{username})"
-        else:
-            # Could be another type of update, log it if necessary
-            print(f"Warning: Unknown update type received in restricted_access: {type(update_obj)}")
-            return # Don't process unknown types
 
-        # Check if the user ID is allowed
-        if user_id in ALLOWED_USER_IDS:
-            # If allowed, execute the original handler function
-            # print(f"Authorized access for {user_info_str} to {func.__name__}") # Optional: Log authorized access
+        if user_id and user_id in ALLOWED_USER_IDS:
             return func(*args, **kwargs)
-        else:
-            # If not allowed, log it and optionally notify the user (or just ignore)
-            print(f"Unauthorized access attempt by {user_info_str} for {func.__name__}")
-            # Optionally send a message (might alert unwanted users):
-            # try:
-            #     chat_id = update_obj.message.chat.id if hasattr(update_obj, 'message') else update_obj.chat.id
-            #     bot.send_message(chat_id, "Sorry, you are not authorized to use this bot.")
-            # except Exception as e:
-            #     print(f"Error sending unauthorized message: {e}")
-            return # Stop processing
 
+        if user_id:
+            print(f"Unauthorized: {user_id} tried {func.__name__}")
     return wrapper
-# --- End of Decorator ---
 
 
-# --- Apply the decorator to your handlers ---
+def station_name(code):
+    s = STATIONS.get(code)
+    if not s:
+        return f"Station {code}"
+    return f"{s['Heb']} ({s['Eng']})"
 
-# Define button texts (keep these)
-BUTTON_LOD = "From Lod"
-BUTTON_KIRYAT_GAT = "From Kiryat Gat"
 
-# Function to generate Reply Keyboard (keep this)
 def gen_reply_keyboard():
-    markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    button_lod = KeyboardButton(BUTTON_LOD)
-    button_kiryat_gat = KeyboardButton(BUTTON_KIRYAT_GAT)
-    markup.add(button_lod, button_kiryat_gat)
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
+    markup.row(
+        KeyboardButton(BUTTON_LOD_TO_GAT),
+        KeyboardButton(BUTTON_GAT_TO_LOD),
+    )
+    markup.row(
+        KeyboardButton(BUTTON_LOD_TO_HASHALOM),
+        KeyboardButton(BUTTON_HASHALOM_TO_LOD),
+    )
     return markup
 
-# Formatting function (keep this)
+
 def format_train_times_html(train_data, origin_code, dest_code):
-    # ... (keep your existing formatting logic here) ...
-    station_map = { 7000: "Kiryat Gat", 5000: "Lod", 8550: "Beer Sheva Center" }
-    origin_name = station_map.get(origin_code, f"Station {origin_code}")
-    dest_name = station_map.get(dest_code, f"Station {dest_code}")
-    if not train_data: return f"😕 Sorry, no upcoming trains found from <b>{origin_name}</b> to <b>{dest_name}</b>."
-    output_lines = [f"🚂 <b>Upcoming Trains: {origin_name} → {dest_name}</b>\n"]
+    origin_name = station_name(origin_code)
+    dest_name = station_name(dest_code)
+
+    if not train_data:
+        return f"😕 No upcoming trains from <b>{origin_name}</b> to <b>{dest_name}</b>."
+
+    lines = [f"🚂 <b>{origin_name} → {dest_name}</b>\n"]
+
     for train in train_data:
         try:
-            dep_dt = datetime.datetime.fromisoformat(train['departureTime']); arr_dt = datetime.datetime.fromisoformat(train['arrivalTime'])
-            dep_time_fmt = dep_dt.strftime('%H:%M'); arr_time_fmt = arr_dt.strftime('%H:%M')
-            train_num = train.get('trainNumber', 'N/A'); dep_platform = train.get('originPlatform', '?')
-            delay_str = ""
+            dep_dt = datetime.datetime.fromisoformat(train['departureTime'])
+            arr_dt = datetime.datetime.fromisoformat(train['arrivalTime'])
+            dep_time = dep_dt.strftime('%H:%M')
+            arr_time = arr_dt.strftime('%H:%M')
+            train_num = train.get('trainNumber', 'N/A')
+            dep_platform = train.get('originPlatform', '?')
+
+            # Build display with delay
+            delay_minutes = 0
             position = train.get('trainPosition')
             if position and 'calcDiffMinutes' in position:
-                delay = position['calcDiffMinutes']
-                if delay > 0: delay_str = f"  <i>(Est. Delay: {delay} min)</i>"
-            line = (f"<b>Train #: {train_num}</b>\n"
-                    f"  departing at <b>{dep_time_fmt}</b> (Platform {dep_platform})\n"
-                    f"  arriving at <b>{arr_time_fmt}</b>{delay_str}")
-            output_lines.append(line)
-        except Exception as e: print(f"Error formatting train entry: {e} - Data: {train}"); output_lines.append("❗️<i>Error processing one train entry.</i>")
-    return "\n\n".join(output_lines)
+                delay_minutes = position['calcDiffMinutes'] or 0
+
+            if delay_minutes > 0:
+                delayed_dep = dep_dt + datetime.timedelta(minutes=delay_minutes)
+                delayed_dep_time = delayed_dep.strftime('%H:%M')
+                dep_display = f"<s>{dep_time}</s> <b>{delayed_dep_time}</b> <i>(+{delay_minutes} min)</i>"
+                delayed_arr = arr_dt + datetime.timedelta(minutes=delay_minutes)
+                delayed_arr_time = delayed_arr.strftime('%H:%M')
+                arr_display = f"<s>{arr_time}</s> <b>{delayed_arr_time}</b>"
+            else:
+                dep_display = f"<b>{dep_time}</b>"
+                arr_display = f"<b>{arr_time}</b>"
+
+            line = (
+                f"<b>Train #{train_num}</b>\n"
+                f"  🕐 Departs: {dep_display}  •  Platform {dep_platform}\n"
+                f"  🏁 Arrives: {arr_display}"
+            )
+            lines.append(line)
+        except Exception as e:
+            print(f"Error formatting train: {e} - {train}")
+            lines.append("❗ <i>Error processing one train entry.</i>")
+
+    return "\n\n".join(lines)
 
 
 @bot.message_handler(commands=['start', 'hello', 'help'])
-@restricted_access # <--- Apply decorator
+@restricted_access
 def send_welcome(message):
-    bot.reply_to(message, "Hi, I am the Rail Lates Bot. How can I assist you?\nsend /times to get Keyboard")
-
-@bot.message_handler(commands=['times'])
-@restricted_access # <--- Apply decorator
-def request_location_choice(message):
-    bot.send_message(message.chat.id,
-                     "Let me know from where you want to leave:",
-                     reply_markup=gen_reply_keyboard())
-
-@bot.message_handler(func=lambda message: message.text in [BUTTON_LOD, BUTTON_KIRYAT_GAT])
-@restricted_access # <--- Apply decorator
-def handle_location_choice(message):
-    origin_code = None
-    dest_code = None
-    action_message = None
-
-    if message.text == BUTTON_LOD:
-        origin_code = 5000; dest_code = 7000
-        action_message = f"Fetching train times from {BUTTON_LOD} to {BUTTON_KIRYAT_GAT}..."
-    elif message.text == BUTTON_KIRYAT_GAT:
-        origin_code = 7000; dest_code = 5000
-        action_message = f"Fetching train times from {BUTTON_KIRYAT_GAT} to {BUTTON_LOD}..."
-
-    if origin_code and dest_code and action_message:
-        bot.send_message(message.chat.id, action_message)
-        try:
-            raw_response_string = rail_req.main(fromStation=origin_code, toStation=dest_code)
-            times_data = None
-            if raw_response_string:
-                try: times_data = json.loads(raw_response_string)
-                except json.JSONDecodeError as json_err:
-                    print(f"JSON Decode Error: {json_err}"); print(f"Raw response was: {raw_response_string}")
-                    bot.send_message(message.chat.id, "Sorry, received unusable data from the train API.")
-                    return
-            if times_data:
-                formatted_output = format_train_times_html(times_data, origin_code, dest_code)
-                bot.send_message(message.chat.id, formatted_output, parse_mode='HTML')
-            else:
-                 bot.send_message(message.chat.id, f"😕 No train data found for the selected route.")
-        except Exception as e:
-            bot.send_message(message.chat.id, f"Sorry, an error occurred while fetching train times: {e}")
-            print(f"Error in handle_location_choice during API call or processing: {e}")
-
-# You might want to restrict this too, or remove it if it's just for debugging
-# @bot.message_handler(func=lambda message: True)
-# @restricted_access # <--- Apply decorator if keeping it
-# def echo_all(message):
-# 	bot.reply_to(message, f"I didn't understand that. Try /times or /help.")
+    bot.send_message(
+        message.chat.id,
+        "👋 Welcome to <b>Rail Notification Bot</b>!\n\n"
+        "Use /times to get the route keyboard.",
+        parse_mode='HTML'
+    )
 
 
-print("Bot starting with access restricted to User IDs:", ALLOWED_USER_IDS)
+@bot.message_handler(commands=['times','time'])
+@restricted_access
+def request_route(message):
+    bot.send_message(
+        message.chat.id,
+        "Select a route:",
+        reply_markup=gen_reply_keyboard()
+    )
+
+
+@bot.message_handler(func=lambda message: message.text in BUTTON_ROUTES)
+@restricted_access
+def handle_route_choice(message):
+    origin_code, dest_code = BUTTON_ROUTES[message.text]
+
+    bot.send_message(message.chat.id, f"⏳ Fetching trains...")
+
+    try:
+        raw = rail_req.main(fromStation=origin_code, toStation=dest_code)
+        times_data = None
+
+        if raw:
+            try:
+                times_data = json.loads(raw)
+            except json.JSONDecodeError as e:
+                print(f"JSON Decode Error: {e}")
+                bot.send_message(message.chat.id, "❌ Received unusable data from the train API.")
+                return
+
+        if times_data:
+            text = format_train_times_html(times_data, origin_code, dest_code)
+        else:
+            text = f"😕 No train data found."
+
+        bot.send_message(message.chat.id, text, parse_mode='HTML', reply_markup=gen_reply_keyboard())
+
+    except Exception as e:
+        print(f"Error fetching trains: {e}")
+        bot.send_message(message.chat.id, f"❌ Error: {e}")
+
+
+print("Bot starting. Allowed IDs:", ALLOWED_USER_IDS)
 bot.infinity_polling()
-print("Bot stopped.")
