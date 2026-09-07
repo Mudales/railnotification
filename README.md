@@ -61,6 +61,39 @@ python bot.py
 3. Tap a route button to see upcoming trains
 4. If a train is delayed, the original time appears with a ~~strikethrough~~ and the updated time next to it
 
+## Rail API Skill (for AI agents)
+
+This repo ships a portable, framework-agnostic skill at `.claude/skills/rail-api/`
+that wraps the same Israel Railways API the bot uses, so an agent (or you) can
+query next-train times directly.
+
+The client `rail_query.py` is **standard-library only** (no `requests`/`pytz`),
+runs on any Python 3.9+ with no installs, and prints JSON on stdout / errors on
+stderr with clear exit codes. Stations resolve by numeric ID or by English/Hebrew
+name (full or partial); all ~68 stations are vendored in `stations.py`
+(from [sh0oki/israel-rail-api](https://github.com/sh0oki/israel-rail-api)).
+
+```bash
+# Next trains now (Asia/Jerusalem) — stations by name or ID
+python3 .claude/skills/rail-api/rail_query.py --from lod --to "kiryat gat"
+python3 .claude/skills/rail-api/rail_query.py --from 5000 --to 4600 --date 2026-09-08 --time 08:30
+
+# Search stations (English or Hebrew), or list them all
+python3 .claude/skills/rail-api/rail_query.py --find jerusalem
+python3 .claude/skills/rail-api/rail_query.py --list-stations
+
+# Full unparsed API response
+python3 .claude/skills/rail-api/rail_query.py --from lod --to kiryat-gat --raw
+```
+
+- **Claude Code** auto-triggers the skill on Israel-rail questions via
+  `SKILL.md`.
+- **Hermes / other agents** can just shell out to `rail_query.py` and parse the
+  JSON — see the "Using from any agent" section in `SKILL.md`.
+
+See `.claude/skills/rail-api/SKILL.md` for the full API reference (endpoint,
+headers, payload, auth key, station resolution).
+
 ## Project Structure
 
 ```
@@ -71,4 +104,5 @@ Dockerfile      - Multi-stage Docker build
 docker-compose.yml
 requirements.txt
 .env            - Your secrets (not committed)
+.claude/skills/rail-api/ - Portable rail API skill (rail_query.py + stations.py + SKILL.md)
 ```
