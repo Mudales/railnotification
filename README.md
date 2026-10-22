@@ -2,12 +2,33 @@
 
 A Telegram bot that fetches real-time Israel Railways train schedules. Shows upcoming departures, arrivals, platform numbers, and live delay info.
 
+It also shows real-time **bus** arrivals via [curlbus](https://github.com/elad661/curlbus).
+
 ## Routes
 
 | Route | Stations |
 |-------|----------|
 | Lod <-> Kiryat Gat | 5000 <-> 7000 |
 | Lod <-> HaShalom (Tel Aviv) | 5000 <-> 4600 |
+
+## Bus lines
+
+Bus data comes from the [curlbus](https://curlbus.app) JSON API, which wraps the
+Ministry of Transport realtime SIRI feed. curlbus is realtime **per stop**, so a
+line + direction is configured as "the stop that line departs from in that
+direction":
+
+| Button | Line | Stop | Stop name |
+|--------|------|------|-----------|
+| 460 Lod -> Tel Aviv | 460 (Kavim) | 35096 | Lod Train Station / Yoseftal |
+| 460 Tel Aviv -> Lod | 460 (Kavim) | 20001 | TA Savidor Station / Platforms A |
+| 464 Lod -> Tel Aviv | 464 (Kavim) | 35096 | Lod Train Station / Yoseftal |
+| 464 Tel Aviv -> Lod | 464 (Kavim) | 20349 | TA Savidor Station / Derech Namir |
+
+To watch a different stop, edit `BUS_ROUTES` at the top of `curlbus_req.py`.
+
+> Note: line 464 runs only a handful of trips a day in each direction, so outside
+> those hours an empty answer is correct, not a failure.
 
 ## Setup
 
@@ -60,6 +81,13 @@ python bot.py
 2. Send `/times` to get the route keyboard
 3. Tap a route button to see upcoming trains
 4. If a train is delayed, the original time appears with a ~~strikethrough~~ and the updated time next to it
+5. Tap a bus button (460 / 464) to see the next buses on that line and direction
+6. Send a bare **stop number** (e.g. `35096`) to see every line due at that stop
+   in the next 18 minutes - the window is `DEFAULT_WINDOW_MINUTES` in
+   `curlbus_req.py`
+
+Stop numbers are the ones printed on the bus stop sign, and are also visible in
+Google Maps / OpenStreetMap.
 
 ## Rail API Skill (for AI agents)
 
@@ -99,6 +127,7 @@ headers, payload, auth key, station resolution).
 ```
 bot.py          - Telegram bot handlers and message formatting
 rail_req.py     - Israel Railways API client
+curlbus_req.py  - curlbus (bus arrivals) API client + stop/line config
 data.py         - Train data parsing and filtering
 Dockerfile      - Multi-stage Docker build
 docker-compose.yml

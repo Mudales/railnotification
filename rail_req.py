@@ -42,6 +42,11 @@ def get_formatted_datetime():
 
 
 def main(fromStation: int = 5000, toStation: int = 7000):
+    """Fetch the closest trains for a route.
+
+    Returns a list of train dicts (see data.find_closest_trains), or None if
+    the request failed - the reason is printed to the log.
+    """
     # Headers that mimic a real browser
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36',
@@ -100,25 +105,25 @@ def main(fromStation: int = 5000, toStation: int = 7000):
                     target_time_str=current_dt.time
                 )
                 print(json.dumps(response_parsed_data, indent=4))
-                return json.dumps(response_parsed_data, indent=4)
+                return response_parsed_data
             except json.JSONDecodeError:
                 print("\nResponse was not in JSON format.")
                 print(f"Raw response: {response.text[:500]}")  # Print first 500 chars
-                return "\nResponse was not in JSON format."
+                return None
             except Exception as e:
                 print(f"An error occurred while processing the response: {e}")
-                return str(e)
+                return None
         else:
             print(f"\nFailed to get a successful response. Status: {response.status_code}")
             print(f"Response text: {response.text[:500]}")
-            return f"\nFailed to get a response. Status: {response.status_code}"
+            return None
             
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
-        return f"Request failed: {e}"
+        return None
 
 
 if __name__ == "__main__":
     # Call the main function to execute the request and print the result
     result = main()
-    print(result)
+    print(json.dumps(result, indent=4, ensure_ascii=False))
