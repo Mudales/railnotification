@@ -10,4 +10,10 @@ services:
     environment:
       - TZ=Asia/Jerusalem
       - PYTHONUNBUFFERED=1
+    volumes:
+      # Saved favourite stops, kept across rebuilds.
+      - rail-data:/home/nonroot/app/data
     # אל תוסיף command: פה אם זה כותב משהו אחר!
+
+volumes:
+  rail-data:

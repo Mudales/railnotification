@@ -5,6 +5,9 @@ realtime endpoint is /<stop_code>, so "line 460 towards Tel Aviv" is expressed
 here as "line 460 as seen from the stop it departs from in that direction".
 """
 import datetime
+import math
+import threading
+import time
 
 import requests
 import pytz
@@ -15,6 +18,13 @@ ISRAEL_TZ = pytz.timezone('Asia/Jerusalem')
 
 # How far ahead "what's coming soon" looks, in minutes.
 DEFAULT_WINDOW_MINUTES = 30
+
+# curlbus is a free service run by one person, and ETAs only move every few
+# seconds, so repeated taps on the same stop are served from memory.
+CACHE_SECONDS = 25
+CACHE_MAX_STOPS = 64
+_cache = {}
+_cache_lock = threading.Lock()
 
 # Bus stops we care about, per line and direction.
 # Stop codes verified against the GTFS feed (open-bus stride API) and against
@@ -48,6 +58,10 @@ class CurlbusError(Exception):
     """Raised when curlbus could not answer the question we asked."""
 
 
+class UnknownStop(CurlbusError):
+    """The stop code itself is wrong - retrying will not help."""
+
+
 def _now():
     return datetime.datetime.now(ISRAEL_TZ)
 
@@ -74,7 +88,50 @@ def _text(multilingual, fallback=''):
     return fallback
 
 
-def fetch_stop(stop_code):
+def _haversine_km(from_point, to_point):
+    """Straight-line distance between two (lat, lon) pairs, in km."""
+    lat1, lon1 = from_point
+    lat2, lon2 = to_point
+    radius = 6371.0
+    d_lat = math.radians(lat2 - lat1)
+    d_lon = math.radians(lon2 - lon1)
+    a = (math.sin(d_lat / 2) ** 2
+         + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2))
+         * math.sin(d_lon / 2) ** 2)
+    return 2 * radius * math.asin(math.sqrt(a))
+
+
+def _point(location):
+    """curlbus sends lat/lon as strings in visits and floats in stop_info."""
+    if not isinstance(location, dict):
+        return None
+    try:
+        return float(location['lat']), float(location['lon'])
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def fetch_stop(stop_code, use_cache=True):
+    """curlbus' raw JSON for a stop code, cached briefly. Raises CurlbusError.
+
+    Only successful responses are cached - an error is always retried.
+    """
+    if use_cache:
+        with _cache_lock:
+            cached = _cache.get(stop_code)
+            if cached and (time.monotonic() - cached[0]) < CACHE_SECONDS:
+                return cached[1]
+
+    payload = _request_stop(stop_code)
+
+    with _cache_lock:
+        if len(_cache) >= CACHE_MAX_STOPS:
+            _cache.clear()
+        _cache[stop_code] = (time.monotonic(), payload)
+    return payload
+
+
+def _request_stop(stop_code):
     """Return curlbus' raw JSON for a stop code, or raise CurlbusError."""
     url = f"{API_BASE}/{stop_code}"
     try:
@@ -102,12 +159,16 @@ def fetch_stop(stop_code):
     errors = payload.get('errors')
     if errors:
         # Typically "Invalid stop code 99999999" - worth showing as-is.
-        raise CurlbusError(' '.join(str(e).strip() for e in errors))
+        message = ' '.join(str(e).strip() for e in errors)
+        if 'invalid stop code' in message.lower():
+            raise UnknownStop(message)
+        raise CurlbusError(message)
 
     return payload
 
 
-def get_stop(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None):
+def get_stop(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None,
+             use_cache=True):
     """Everything we show for one stop, from a single curlbus request.
 
     Args:
@@ -120,12 +181,13 @@ def get_stop(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None):
         arrival is a dict of line, destination, operator, eta, minutes.
     """
     stop_code = str(stop_code).strip()
-    payload = fetch_stop(stop_code)
+    payload = fetch_stop(stop_code, use_cache=use_cache)
 
     # curlbus names the stop in stop_info, independently of whether any bus is
     # due - but it is absent for stops it has no GTFS entry for.
     info = payload.get('stop_info') or {}
     address = info.get('address') or {}
+    stop_point = _point(info.get('location'))
 
     visits = payload.get('visits') or {}
     # The key is normally the requested code, but don't assume it.
@@ -162,12 +224,21 @@ def get_stop(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None):
             continue
         seen.add(key)
 
+        # A vehicle position means this ETA comes from a bus being tracked
+        # right now, rather than from the timetable alone.
+        vehicle_point = _point(visit.get('location'))
+        distance_km = None
+        if vehicle_point and stop_point:
+            distance_km = _haversine_km(vehicle_point, stop_point)
+
         arrivals.append({
             'line': str(line),
             'destination': destination,
             'operator': operator,
             'eta': eta,
             'minutes': minutes,
+            'tracked': vehicle_point is not None,
+            'distance_km': distance_km,
         })
 
     arrivals.sort(key=lambda a: a['eta'])
@@ -178,13 +249,16 @@ def get_stop(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None):
         # The plain 'city' field is the English one, which keeps the subtitle
         # left-to-right next to the Hebrew stop name.
         'city': address.get('city') or None,
+        'location': stop_point,
         'arrivals': arrivals,
     }
 
 
-def get_arrivals(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None):
+def get_arrivals(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None,
+                 use_cache=True):
     """Just the arrivals for a stop, soonest first. See get_stop()."""
-    return get_stop(stop_code, within_minutes=within_minutes, lines=lines)['arrivals']
+    return get_stop(stop_code, within_minutes=within_minutes, lines=lines,
+                    use_cache=use_cache)['arrivals']
 
 
 if __name__ == '__main__':
@@ -193,4 +267,7 @@ if __name__ == '__main__':
     stop = get_stop(code, within_minutes=30)
     print(f"{stop['code']}  {stop['name']}  [{stop['city']}]")
     for arrival in stop['arrivals']:
-        print(f"{arrival['line']:<5} {arrival['minutes']:>3} min  {arrival['destination']}")
+        where = f"{arrival['distance_km']:.1f} km" if arrival['distance_km'] else '-'
+        print(f"{arrival['line']:<5} {arrival['minutes']:>3} min  "
+              f"{'live' if arrival['tracked'] else '    '} {where:>8}  "
+              f"{arrival['destination']}")

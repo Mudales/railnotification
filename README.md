@@ -88,6 +88,29 @@ python bot.py
    buses are listed before the rest are summarised
 7. `/help` explains the above and re-sends the buttons; `/times` also refreshes
    them if they go missing
+8. Save the stops you actually use - `/save 35096 Home` - and they become
+   `⭐` buttons. `/favs` lists them, `/del Home` removes one. Favourites are
+   per Telegram user and are kept in a Docker volume, so a rebuild does not
+   wipe them
+9. Every arrivals reply carries a `🔄 Refresh` button that re-queries in place,
+   bypassing the cache
+
+### Reading a bus line
+
+```
+🚌 460 · 4 min (23:03) 📍1.1km ← ת. מרכזית ירושלים/הורדה
+🚌 9 · 23 min (23:22) ← שדרות יחד שבטי ישראל/שבט שמעון
+```
+
+`📍` marks a bus the SIRI feed has a live position for, followed by the
+**straight-line** distance to the stop - handy as a sanity check, but it will
+look wrong on a winding route, and a stale position can put a bus "2 minutes"
+away while the distance says otherwise. A row with no `📍` is the timetable's
+estimate, with no vehicle being tracked.
+
+Responses are cached for `CACHE_SECONDS` (25s) per stop, so repeated taps do
+not hammer curlbus - a free service run by one person. The refresh button
+always skips the cache.
 
 Stop numbers are the ones printed on the bus stop sign, and are also visible in
 Google Maps / OpenStreetMap.
@@ -130,7 +153,8 @@ headers, payload, auth key, station resolution).
 ```
 bot.py          - Telegram bot handlers and message formatting
 rail_req.py     - Israel Railways API client
-curlbus_req.py  - curlbus (bus arrivals) API client + stop/line config
+curlbus_req.py  - curlbus (bus arrivals) API client, cache + stop/line config
+favorites.py    - Per-user saved stops (JSON in the rail-data volume)
 data.py         - Train data parsing and filtering
 Dockerfile      - Multi-stage Docker build
 docker-compose.yml

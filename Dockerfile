@@ -8,6 +8,10 @@ WORKDIR /home/nonroot
 COPY requirements.txt .
 RUN pip install --user -r requirements.txt
 
+# The runtime stage has no shell, so the writable data directory is made here
+# and copied across. The named volume mounted over it inherits this ownership.
+RUN mkdir -p /home/nonroot/appdata && touch /home/nonroot/appdata/.keep
+
 # Stage 2: Runtime
 FROM cgr.dev/chainguard/python:latest
 
@@ -19,6 +23,9 @@ COPY --from=dev /home/nonroot/.local /home/nonroot/.local
 # Copy application files
 COPY *.py ./
 COPY .env .env
+
+# Favourites live here, on a volume, so a rebuild does not wipe them.
+COPY --from=dev --chown=65532:65532 /home/nonroot/appdata ./data
 
 # Set PATH to include user packages
 ENV PATH="/home/nonroot/.local/bin:$PATH"

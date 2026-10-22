@@ -1,6 +1,8 @@
 from decouple import config
 import telebot
-from telebot.types import ReplyKeyboardMarkup, KeyboardButton
+from telebot.types import (ReplyKeyboardMarkup, KeyboardButton,
+                            InlineKeyboardMarkup, InlineKeyboardButton)
+from telebot.apihelper import ApiTelegramException
 import json
 import datetime
 import functools
@@ -8,6 +10,7 @@ import html
 
 import rail_req
 import curlbus_req
+import favorites
 
 BOT_API = config("BOT_API")
 bot = telebot.TeleBot(BOT_API)
@@ -45,6 +48,9 @@ BUS_BUTTONS = list(curlbus_req.BUS_ROUTES)
 # Keep the stop reply readable instead of dumping a whole timetable.
 MAX_ARRIVALS = 12
 
+# Favourite-stop buttons are prefixed so they can't collide with the fixed ones.
+FAV_PREFIX = '⭐ '
+
 
 def restricted_access(func):
     @functools.wraps(func)
@@ -72,7 +78,7 @@ def station_name(code):
     return s['Eng']
 
 
-def gen_reply_keyboard():
+def gen_reply_keyboard(user_id=None):
     markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
     markup.row(
         KeyboardButton(BUTTON_LOD_TO_GAT),
@@ -84,6 +90,10 @@ def gen_reply_keyboard():
     )
     for i in range(0, len(BUS_BUTTONS), 2):
         markup.row(*(KeyboardButton(label) for label in BUS_BUTTONS[i:i + 2]))
+
+    saved = list(favorites.list_for(user_id)) if user_id else []
+    for i in range(0, len(saved), 2):
+        markup.row(*(KeyboardButton(FAV_PREFIX + name) for name in saved[i:i + 2]))
     return markup
 
 
@@ -190,6 +200,13 @@ def format_bus_arrivals_html(arrivals, title, subtitle=None, show_line=True,
             row += f"<b>{esc(arrival['line'])}</b> · "
         row += f"{due} <i>({when})</i>"
 
+        # A tracked bus is one the feed has a live position for; everything
+        # else is the timetable's guess.
+        if arrival['tracked']:
+            row += " 📍"
+            if arrival['distance_km'] is not None:
+                row += f"{arrival['distance_km']:.1f}km"
+
         destination = arrival['destination']
         if destination:
             if len(destination) > MAX_DEST_CHARS:
@@ -201,7 +218,91 @@ def format_bus_arrivals_html(arrivals, title, subtitle=None, show_line=True,
         header.append(f"<i>+ {hidden} more within "
                       f"{curlbus_req.DEFAULT_WINDOW_MINUTES} min</i>")
 
+    header.append(f"<i>updated {now_hhmmss()}</i>")
     return "\n".join(header)
+
+
+def now_hhmmss():
+    return datetime.datetime.now(curlbus_req.ISRAEL_TZ).strftime('%H:%M:%S')
+
+
+def refresh_markup(kind, key):
+    """A single "refresh" button carrying what to re-query.
+
+    Telegram caps callback_data at 64 bytes, so a bus route travels as its
+    index rather than its label.
+    """
+    if kind == 'b':
+        try:
+            key = BUS_BUTTONS.index(key)
+        except ValueError:
+            return None
+    markup = InlineKeyboardMarkup()
+    markup.add(InlineKeyboardButton('🔄 Refresh', callback_data=f"{kind}|{key}"))
+    return markup
+
+
+def render_stop(stop_code, use_cache=True):
+    stop = curlbus_req.get_stop(stop_code, use_cache=use_cache)
+
+    subtitle = f"Stop {stop['code']}"
+    if stop['city']:
+        subtitle += f" · {stop['city']}"
+    subtitle += f" · next {curlbus_req.DEFAULT_WINDOW_MINUTES} min"
+
+    return format_bus_arrivals_html(
+        stop['arrivals'],
+        title=stop['name'] or f"Stop {stop['code']}",
+        subtitle=subtitle,
+        limit=MAX_ARRIVALS,
+    )
+
+
+def render_bus_route(label, use_cache=True):
+    route = curlbus_req.BUS_ROUTES[label]
+    arrivals = curlbus_req.get_arrivals(
+        route['stop'],
+        within_minutes=curlbus_req.DEFAULT_WINDOW_MINUTES,
+        lines={route['line']},
+        use_cache=use_cache,
+    )
+    return format_bus_arrivals_html(
+        arrivals,
+        title=label,
+        subtitle=f"from {route['stop_name']} (stop {route['stop']})",
+        show_line=False,
+    )
+
+
+def send_or_edit(chat_id, message_id, text, markup=None):
+    if message_id is None:
+        bot.send_message(chat_id, text, parse_mode='HTML', reply_markup=markup)
+        return
+    try:
+        bot.edit_message_text(text, chat_id, message_id,
+                              parse_mode='HTML', reply_markup=markup)
+    except ApiTelegramException as e:
+        # Telegram rejects an edit that would change nothing.
+        if 'message is not modified' not in str(e):
+            raise
+
+
+def answer_arrivals(chat_id, message_id, kind, key, use_cache=True):
+    """Put one arrivals view on screen, as a new message or an edit."""
+    try:
+        if kind == 's':
+            text = render_stop(key, use_cache=use_cache)
+        else:
+            text = render_bus_route(key, use_cache=use_cache)
+    except curlbus_req.CurlbusError as e:
+        send_or_edit(chat_id, message_id, f"❌ {esc(e)}")
+        return
+    except Exception as e:
+        print(f"Unexpected error rendering {kind} {key!r}: {e}")
+        send_or_edit(chat_id, message_id, "❌ Could not fetch arrivals right now.")
+        return
+
+    send_or_edit(chat_id, message_id, text, refresh_markup(kind, key))
 
 
 @bot.message_handler(commands=['start', 'hello', 'help'])
@@ -219,15 +320,24 @@ def send_welcome(message):
         "🔢 <b>Any stop</b> - just send a stop number, for example "
         "<code>35096</code>, and get its name plus every line due there in "
         f"the next {curlbus_req.DEFAULT_WINDOW_MINUTES} minutes.\n\n"
+        "⭐ <b>Favourites</b> - save the stops you use and they become "
+        "buttons.\n\n"
         f"{'━' * 20}\n"
         "<b>Commands</b>\n"
         "/times - show or refresh the buttons\n"
+        "/save &lt;code&gt; &lt;name&gt; - e.g. <code>/save 35096 Home</code>\n"
+        "/favs - list your saved stops\n"
+        "/del &lt;name&gt; - remove one\n"
         "/help - this message\n\n"
         "<i>Buttons gone or out of date? Send /times to bring them back.\n"
         "Stop numbers are printed on the stop sign, and show up in Google "
-        "Maps too.</i>",
+        "Maps too.\n"
+        "📍 means a bus the feed is tracking right now; the distance next to "
+        "it is a straight line to the stop, so it can look odd on a winding "
+        "route. No 📍 means the time comes from the timetable.\n"
+        "🔄 under a reply fetches it again.</i>",
         parse_mode='HTML',
-        reply_markup=gen_reply_keyboard()
+        reply_markup=gen_reply_keyboard(message.from_user.id)
     )
 
 
@@ -237,7 +347,7 @@ def request_route(message):
     bot.send_message(
         message.chat.id,
         "Select a route:",
-        reply_markup=gen_reply_keyboard()
+        reply_markup=gen_reply_keyboard(message.from_user.id)
     )
 
 
@@ -256,7 +366,8 @@ def handle_route_choice(message):
         else:
             text = f"😕 No train data found."
 
-        bot.send_message(message.chat.id, text, parse_mode='HTML', reply_markup=gen_reply_keyboard())
+        bot.send_message(message.chat.id, text, parse_mode='HTML',
+                         reply_markup=gen_reply_keyboard(message.from_user.id))
 
     except Exception as e:
         print(f"Error fetching trains: {e}")
@@ -266,67 +377,145 @@ def handle_route_choice(message):
 @bot.message_handler(func=lambda message: message.text in curlbus_req.BUS_ROUTES)
 @restricted_access
 def handle_bus_choice(message):
-    route = curlbus_req.BUS_ROUTES[message.text]
-
-    bot.send_message(message.chat.id, "⏳ Fetching buses...")
-
-    try:
-        arrivals = curlbus_req.get_arrivals(
-            route['stop'],
-            within_minutes=curlbus_req.DEFAULT_WINDOW_MINUTES,
-            lines={route['line']},
-        )
-    except curlbus_req.CurlbusError as e:
-        bot.send_message(message.chat.id, f"❌ {e}", reply_markup=gen_reply_keyboard())
-        return
-    except Exception as e:
-        print(f"Unexpected error fetching buses: {e}")
-        bot.send_message(message.chat.id, "❌ Could not fetch bus times right now.",
-                         reply_markup=gen_reply_keyboard())
-        return
-
-    text = format_bus_arrivals_html(
-        arrivals,
-        title=message.text,
-        subtitle=f"from {route['stop_name']} (stop {route['stop']})",
-        show_line=False,
-    )
-    bot.send_message(message.chat.id, text, parse_mode='HTML',
-                     reply_markup=gen_reply_keyboard())
+    placeholder = bot.send_message(message.chat.id, "⏳ Fetching buses...")
+    answer_arrivals(message.chat.id, placeholder.message_id, 'b', message.text)
 
 
 @bot.message_handler(func=lambda message: (message.text or '').strip().isdigit())
 @restricted_access
 def handle_stop_code(message):
     stop_code = message.text.strip()
+    placeholder = bot.send_message(message.chat.id, f"⏳ Checking stop {stop_code}...")
+    answer_arrivals(message.chat.id, placeholder.message_id, 's', stop_code)
 
-    bot.send_message(message.chat.id, f"⏳ Checking stop {stop_code}...")
 
+@bot.message_handler(func=lambda message: (message.text or '').startswith(FAV_PREFIX))
+@restricted_access
+def handle_favorite_button(message):
+    name = message.text[len(FAV_PREFIX):].strip()
+    stop_code = favorites.list_for(message.from_user.id).get(name)
+
+    if not stop_code:
+        bot.send_message(
+            message.chat.id,
+            f"🤔 <b>{esc(name)}</b> is not saved any more. /favs shows what is.",
+            parse_mode='HTML',
+            reply_markup=gen_reply_keyboard(message.from_user.id),
+        )
+        return
+
+    placeholder = bot.send_message(message.chat.id, f"⏳ Checking {name}...")
+    answer_arrivals(message.chat.id, placeholder.message_id, 's', stop_code)
+
+
+@bot.message_handler(commands=['save'])
+@restricted_access
+def handle_save(message):
+    parts = (message.text or '').split(maxsplit=2)
+    if len(parts) < 3:
+        bot.send_message(
+            message.chat.id,
+            "Usage: <code>/save 35096 Home</code>",
+            parse_mode='HTML',
+        )
+        return
+
+    stop_code, name = parts[1].strip(), parts[2]
+
+    # Check the stop exists before saving a button that would always fail.
     try:
         stop = curlbus_req.get_stop(stop_code)
+        real_name = stop['name']
+    except curlbus_req.UnknownStop as e:
+        bot.send_message(message.chat.id, f"❌ {esc(e)}")
+        return
     except curlbus_req.CurlbusError as e:
-        bot.send_message(message.chat.id, f"❌ {e}", reply_markup=gen_reply_keyboard())
-        return
+        # The service is down, not the code - take the user's word for it.
+        print(f"/save could not verify {stop_code}: {e}")
+        real_name = None
     except Exception as e:
-        print(f"Unexpected error fetching stop {stop_code}: {e}")
-        bot.send_message(message.chat.id, "❌ Could not fetch arrivals right now.",
-                         reply_markup=gen_reply_keyboard())
+        print(f"/save unexpected error for {stop_code}: {e}")
+        real_name = None
+
+    try:
+        name = favorites.add(message.from_user.id, name, stop_code)
+    except favorites.FavoritesError as e:
+        bot.send_message(message.chat.id, f"❌ {esc(e)}")
         return
 
-    # curlbus knows the stop's name even when nothing is due there.
-    subtitle = f"Stop {stop['code']}"
-    if stop['city']:
-        subtitle += f" · {stop['city']}"
-    subtitle += f" · next {curlbus_req.DEFAULT_WINDOW_MINUTES} min"
+    saved = f"⭐ Saved <b>{esc(name)}</b> as stop {esc(stop_code)}"
+    saved += f"\n{esc(real_name)}" if real_name else ""
+    bot.send_message(message.chat.id, saved, parse_mode='HTML',
+                     reply_markup=gen_reply_keyboard(message.from_user.id))
 
-    text = format_bus_arrivals_html(
-        stop['arrivals'],
-        title=stop['name'] or f"Stop {stop['code']}",
-        subtitle=subtitle,
-        limit=MAX_ARRIVALS,
-    )
+
+@bot.message_handler(commands=['favs', 'favourites', 'favorites'])
+@restricted_access
+def handle_favs(message):
+    saved = favorites.list_for(message.from_user.id)
+    if not saved:
+        bot.send_message(
+            message.chat.id,
+            "No favourites yet. Save one with <code>/save 35096 Home</code>.",
+            parse_mode='HTML',
+        )
+        return
+
+    lines = ["⭐ <b>Your stops</b>"]
+    lines += [f"<code>{esc(code)}</code> · {esc(name)}"
+              for name, code in saved.items()]
+    lines.append("\n<i>Remove one with /del &lt;name&gt;</i>")
+    bot.send_message(message.chat.id, "\n".join(lines), parse_mode='HTML',
+                     reply_markup=gen_reply_keyboard(message.from_user.id))
+
+
+@bot.message_handler(commands=['del', 'delete', 'rm'])
+@restricted_access
+def handle_delete(message):
+    parts = (message.text or '').split(maxsplit=1)
+    if len(parts) < 2:
+        bot.send_message(message.chat.id, "Usage: <code>/del Home</code>",
+                         parse_mode='HTML')
+        return
+
+    name = parts[1]
+    if favorites.remove(message.from_user.id, name):
+        text = f"🗑 Removed <b>{esc(name)}</b>."
+    else:
+        text = f"🤔 No favourite called <b>{esc(name)}</b>. /favs lists them."
     bot.send_message(message.chat.id, text, parse_mode='HTML',
-                     reply_markup=gen_reply_keyboard())
+                     reply_markup=gen_reply_keyboard(message.from_user.id))
+
+
+@bot.callback_query_handler(func=lambda call: (call.data or '')[:2] in ('s|', 'b|'))
+@restricted_access
+def handle_refresh(call):
+    kind, _, key = call.data.partition('|')
+
+    if kind == 'b':
+        try:
+            key = BUS_BUTTONS[int(key)]
+        except (ValueError, IndexError):
+            bot.answer_callback_query(call.id, "That button is out of date.")
+            return
+
+    bot.answer_callback_query(call.id, "Refreshing…")
+    # Skip the cache: the user is asking precisely because time has passed.
+    answer_arrivals(call.message.chat.id, call.message.message_id, kind, key,
+                    use_cache=False)
+
+
+@bot.message_handler(func=lambda message: True)
+@restricted_access
+def handle_unknown(message):
+    bot.send_message(
+        message.chat.id,
+        "🤔 Not sure what that is.\n"
+        "Send a <b>stop number</b> like <code>35096</code>, tap a button, "
+        "or see /help.",
+        parse_mode='HTML',
+        reply_markup=gen_reply_keyboard(message.from_user.id),
+    )
 
 
 print("Bot starting. Allowed IDs:", ALLOWED_USER_IDS)
