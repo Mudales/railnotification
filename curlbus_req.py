@@ -239,6 +239,11 @@ def get_stop(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None,
             'minutes': minutes,
             'tracked': vehicle_point is not None,
             'distance_km': distance_km,
+            'location': vehicle_point,
+            # Together these identify one bus on one journey, and stay stable
+            # between polls - which is what makes following it possible.
+            'trip_id': visit.get('trip_id'),
+            'vehicle_ref': visit.get('vehicle_ref'),
         })
 
     arrivals.sort(key=lambda a: a['eta'])
@@ -259,6 +264,38 @@ def get_arrivals(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None,
     """Just the arrivals for a stop, soonest first. See get_stop()."""
     return get_stop(stop_code, within_minutes=within_minutes, lines=lines,
                     use_cache=use_cache)['arrivals']
+
+
+def find_vehicle(stop_code, trip_id, vehicle_ref, use_cache=False):
+    """Locate one specific bus still heading for a stop.
+
+    This reads the raw visits rather than get_stop()'s list, so neither the
+    time window nor the duplicate filtering can hide the bus being followed.
+    Returns a dict with line/eta/minutes/point, or None once the bus is gone
+    from the feed - which is the signal that it has passed the stop.
+    """
+    stop_code = str(stop_code).strip()
+    payload = fetch_stop(stop_code, use_cache=use_cache)
+
+    visits = payload.get('visits') or {}
+    raw_visits = visits.get(stop_code)
+    if raw_visits is None:
+        raw_visits = next(iter(visits.values()), [])
+
+    for visit in raw_visits:
+        if (visit.get('trip_id') == trip_id
+                and visit.get('vehicle_ref') == vehicle_ref):
+            eta = _parse_eta(visit.get('eta'))
+            minutes = None
+            if eta is not None:
+                minutes = max(0, int(round((eta - _now()).total_seconds() / 60)))
+            return {
+                'line': str(visit.get('line_name') or ''),
+                'eta': eta,
+                'minutes': minutes,
+                'point': _point(visit.get('location')),
+            }
+    return None
 
 
 if __name__ == '__main__':

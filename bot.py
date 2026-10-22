@@ -7,6 +7,8 @@ import json
 import datetime
 import functools
 import html
+import threading
+import time
 
 import rail_req
 import curlbus_req
@@ -50,6 +52,18 @@ MAX_ARRIVALS = 12
 
 # Favourite-stop buttons are prefixed so they can't collide with the fixed ones.
 FAV_PREFIX = '⭐ '
+
+# Live-location tracking: how often to move the pin, how long to keep going,
+# and how many buses one chat may follow at once.
+TRACK_POLL_SECONDS = 25
+TRACK_MAX_MINUTES = 45
+TRACK_LIVE_PERIOD = 3600
+MAX_TRACK_BUTTONS = 3
+MAX_TRACKS_PER_CHAT = 3
+
+# (chat_id, trip_id, vehicle_ref) of every bus currently being followed.
+_tracks = set()
+_tracks_lock = threading.Lock()
 
 
 def restricted_access(func):
@@ -226,19 +240,30 @@ def now_hhmmss():
     return datetime.datetime.now(curlbus_req.ISRAEL_TZ).strftime('%H:%M:%S')
 
 
-def refresh_markup(kind, key):
-    """A single "refresh" button carrying what to re-query.
+def arrivals_markup(kind, key, stop_code, arrivals):
+    """Refresh button, plus a "follow on a map" button per tracked bus.
 
     Telegram caps callback_data at 64 bytes, so a bus route travels as its
-    index rather than its label.
+    index rather than its label, and an over-long track button is dropped
+    rather than sent and rejected.
     """
     if kind == 'b':
         try:
             key = BUS_BUTTONS.index(key)
         except ValueError:
             return None
+
     markup = InlineKeyboardMarkup()
     markup.add(InlineKeyboardButton('🔄 Refresh', callback_data=f"{kind}|{key}"))
+
+    followable = [a for a in arrivals if a['tracked'] and a['trip_id']]
+    for arrival in followable[:MAX_TRACK_BUTTONS]:
+        data = f"t|{stop_code}|{arrival['trip_id']}|{arrival['vehicle_ref']}"
+        if len(data.encode('utf-8')) > 64:
+            continue
+        due = 'now' if arrival['minutes'] <= 1 else f"{arrival['minutes']}m"
+        markup.add(InlineKeyboardButton(
+            f"📍 Follow {arrival['line']} ({due})", callback_data=data))
     return markup
 
 
@@ -250,12 +275,13 @@ def render_stop(stop_code, use_cache=True):
         subtitle += f" · {stop['city']}"
     subtitle += f" · next {curlbus_req.DEFAULT_WINDOW_MINUTES} min"
 
-    return format_bus_arrivals_html(
+    text = format_bus_arrivals_html(
         stop['arrivals'],
         title=stop['name'] or f"Stop {stop['code']}",
         subtitle=subtitle,
         limit=MAX_ARRIVALS,
     )
+    return text, stop['arrivals'], stop['code']
 
 
 def render_bus_route(label, use_cache=True):
@@ -266,12 +292,13 @@ def render_bus_route(label, use_cache=True):
         lines={route['line']},
         use_cache=use_cache,
     )
-    return format_bus_arrivals_html(
+    text = format_bus_arrivals_html(
         arrivals,
         title=label,
         subtitle=f"from {route['stop_name']} (stop {route['stop']})",
         show_line=False,
     )
+    return text, arrivals, route['stop']
 
 
 def send_or_edit(chat_id, message_id, text, markup=None):
@@ -291,9 +318,9 @@ def answer_arrivals(chat_id, message_id, kind, key, use_cache=True):
     """Put one arrivals view on screen, as a new message or an edit."""
     try:
         if kind == 's':
-            text = render_stop(key, use_cache=use_cache)
+            text, arrivals, stop_code = render_stop(key, use_cache=use_cache)
         else:
-            text = render_bus_route(key, use_cache=use_cache)
+            text, arrivals, stop_code = render_bus_route(key, use_cache=use_cache)
     except curlbus_req.CurlbusError as e:
         send_or_edit(chat_id, message_id, f"❌ {esc(e)}")
         return
@@ -302,7 +329,109 @@ def answer_arrivals(chat_id, message_id, kind, key, use_cache=True):
         send_or_edit(chat_id, message_id, "❌ Could not fetch arrivals right now.")
         return
 
-    send_or_edit(chat_id, message_id, text, refresh_markup(kind, key))
+    send_or_edit(chat_id, message_id, text,
+                 arrivals_markup(kind, key, stop_code, arrivals))
+
+
+def follow_bus(chat_id, stop_code, trip_id, vehicle_ref):
+    """Send a Telegram live location and move it until the bus is gone.
+
+    Returns a message for the user: Telegram's own map does the drawing, so
+    all this has to do is keep the pin honest.
+    """
+    try:
+        vehicle = curlbus_req.find_vehicle(stop_code, trip_id, vehicle_ref)
+    except curlbus_req.CurlbusError as e:
+        return f"❌ {e}"
+
+    if vehicle is None:
+        return "🏁 That bus has already passed the stop."
+    if not vehicle['point']:
+        return "🤷 No live position for that bus right now."
+
+    key = (chat_id, trip_id, vehicle_ref)
+    with _tracks_lock:
+        if key in _tracks:
+            return "📍 Already following that bus."
+        if sum(1 for k in _tracks if k[0] == chat_id) >= MAX_TRACKS_PER_CHAT:
+            return f"📍 Already following {MAX_TRACKS_PER_CHAT} buses."
+        _tracks.add(key)
+
+    try:
+        lat, lon = vehicle['point']
+        sent = bot.send_location(chat_id, lat, lon, live_period=TRACK_LIVE_PERIOD)
+    except Exception as e:
+        print(f"Could not start live location: {e}")
+        with _tracks_lock:
+            _tracks.discard(key)
+        return "❌ Could not start the live map."
+
+    threading.Thread(
+        target=_follow_loop,
+        args=(chat_id, sent.message_id, stop_code, trip_id, vehicle_ref,
+              vehicle['line'], key, vehicle['point']),
+        daemon=True,
+    ).start()
+
+    return (f"📍 Following line <b>{esc(vehicle['line'])}</b> on the map above. "
+            f"It updates itself until the bus reaches the stop.")
+
+
+def _follow_loop(chat_id, message_id, stop_code, trip_id, vehicle_ref, line, key,
+                 start_point):
+    deadline = time.monotonic() + TRACK_MAX_MINUTES * 60
+    # The pin already sits on the starting point, so only a move needs sending.
+    last_point = start_point
+    ending = f"⏱ Stopped following line {line} after {TRACK_MAX_MINUTES} minutes."
+
+    try:
+        while time.monotonic() < deadline:
+            time.sleep(TRACK_POLL_SECONDS)
+
+            try:
+                vehicle = curlbus_req.find_vehicle(stop_code, trip_id, vehicle_ref)
+            except curlbus_req.CurlbusError as e:
+                # A blip in a third-party service should not end the follow.
+                print(f"follow {line}: {e}")
+                continue
+            except Exception as e:
+                print(f"follow {line}: unexpected {e}")
+                ending = f"❌ Stopped following line {line} - something broke."
+                break
+
+            if vehicle is None:
+                ending = (f"🏁 Line {line} is no longer listed at the stop "
+                          "- it has most likely arrived.")
+                break
+
+            point = vehicle['point']
+            # Positions in the feed go stale; re-sending the same one would
+            # just make Telegram complain.
+            if not point or point == last_point:
+                continue
+            last_point = point
+
+            try:
+                bot.edit_message_live_location(point[0], point[1],
+                                               chat_id=chat_id,
+                                               message_id=message_id)
+            except ApiTelegramException as e:
+                if 'message is not modified' in str(e):
+                    continue
+                print(f"follow {line}: live location edit failed: {e}")
+                ending = f"❌ Stopped following line {line} - the map stopped updating."
+                break
+    finally:
+        try:
+            bot.stop_message_live_location(chat_id=chat_id, message_id=message_id)
+        except Exception as e:
+            print(f"follow {line}: could not stop live location: {e}")
+        with _tracks_lock:
+            _tracks.discard(key)
+        try:
+            bot.send_message(chat_id, ending)
+        except Exception as e:
+            print(f"follow {line}: could not send the closing note: {e}")
 
 
 @bot.message_handler(commands=['start', 'hello', 'help'])
@@ -335,7 +464,8 @@ def send_welcome(message):
         "📍 means a bus the feed is tracking right now; the distance next to "
         "it is a straight line to the stop, so it can look odd on a winding "
         "route. No 📍 means the time comes from the timetable.\n"
-        "🔄 under a reply fetches it again.</i>",
+        "🔄 under a reply fetches it again, and 📍 Follow puts the bus on a "
+        "live Telegram map that moves by itself until it reaches the stop.</i>",
         parse_mode='HTML',
         reply_markup=gen_reply_keyboard(message.from_user.id)
     )
@@ -503,6 +633,26 @@ def handle_refresh(call):
     # Skip the cache: the user is asking precisely because time has passed.
     answer_arrivals(call.message.chat.id, call.message.message_id, kind, key,
                     use_cache=False)
+
+
+@bot.callback_query_handler(func=lambda call: (call.data or '').startswith('t|'))
+@restricted_access
+def handle_follow(call):
+    parts = call.data.split('|')
+    if len(parts) != 4:
+        bot.answer_callback_query(call.id, "That button is out of date.")
+        return
+
+    _, stop_code, trip_id, vehicle_ref = parts
+    bot.answer_callback_query(call.id, "Starting the live map…")
+
+    try:
+        note = follow_bus(call.message.chat.id, stop_code, trip_id, vehicle_ref)
+    except Exception as e:
+        print(f"Unexpected error starting follow: {e}")
+        note = "❌ Could not start the live map."
+
+    bot.send_message(call.message.chat.id, note, parse_mode='HTML')
 
 
 @bot.message_handler(func=lambda message: True)

@@ -94,6 +94,27 @@ python bot.py
    wipe them
 9. Every arrivals reply carries a `🔄 Refresh` button that re-queries in place,
    bypassing the cache
+10. Buses with a live position also get a `📍 Follow` button. Tapping it sends a
+    Telegram **live location** - Telegram draws the map itself and the pin moves
+    on its own until the bus reaches the stop
+
+### Following a bus
+
+`📍 Follow` is built on Telegram's own live location, so there is no map image
+to render, no tile server and no API key. A background thread re-reads the feed
+every `TRACK_POLL_SECONDS` (25s) and moves the pin with
+`edit_message_live_location`.
+
+The bus is identified by its `trip_id` + `vehicle_ref` pair, which stays stable
+between polls (measured: 19 of 19 vehicles kept the same pair across 40
+seconds). Following stops when the bus drops out of the feed - meaning it has
+passed the stop - or after `TRACK_MAX_MINUTES` (45), whichever comes first, and
+the bot says which of the two happened.
+
+Limits: `MAX_TRACKS_PER_CHAT` (3) buses at a time per chat, and the same bus
+cannot be followed twice. Positions in the feed go stale, so a pin can sit
+still for a minute or two while the bus is really moving. Restarting the
+container ends any follow in progress.
 
 ### Reading a bus line
 
