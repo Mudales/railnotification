@@ -14,7 +14,7 @@ TIMEOUT = 15
 ISRAEL_TZ = pytz.timezone('Asia/Jerusalem')
 
 # How far ahead "what's coming soon" looks, in minutes.
-DEFAULT_WINDOW_MINUTES = 18
+DEFAULT_WINDOW_MINUTES = 30
 
 # Bus stops we care about, per line and direction.
 # Stop codes verified against the GTFS feed (open-bus stride API) and against

@@ -153,11 +153,15 @@ def esc(text):
     return html.escape(str(text), quote=False)
 
 
-def format_bus_arrivals_html(arrivals, title, subtitle=None, show_line=True):
+def format_bus_arrivals_html(arrivals, title, subtitle=None, show_line=True,
+                             limit=None):
     """Render curlbus arrivals as one short line per bus.
 
     Destinations are Hebrew, so they go last on each line - mixing RTL text
     into the middle of an LTR line makes Telegram reorder it oddly.
+
+    With `limit`, only the soonest `limit` buses are listed and the rest are
+    summed up on a last line, so a busy stop stays readable.
     """
     header = [f"🚍 <b>{esc(title)}</b>"]
     if subtitle:
@@ -170,6 +174,11 @@ def format_bus_arrivals_html(arrivals, title, subtitle=None, show_line=True):
             f"{curlbus_req.DEFAULT_WINDOW_MINUTES} minutes."
         )
         return "\n".join(header)
+
+    hidden = 0
+    if limit is not None and len(arrivals) > limit:
+        hidden = len(arrivals) - limit
+        arrivals = arrivals[:limit]
 
     for arrival in arrivals:
         when = arrival['eta'].strftime('%H:%M')
@@ -187,6 +196,10 @@ def format_bus_arrivals_html(arrivals, title, subtitle=None, show_line=True):
                 destination = destination[:MAX_DEST_CHARS - 1].rstrip() + '…'
             row += f" ← {esc(destination)}"
         header.append(row)
+
+    if hidden:
+        header.append(f"<i>+ {hidden} more within "
+                      f"{curlbus_req.DEFAULT_WINDOW_MINUTES} min</i>")
 
     return "\n".join(header)
 
@@ -307,9 +320,10 @@ def handle_stop_code(message):
     subtitle += f" · next {curlbus_req.DEFAULT_WINDOW_MINUTES} min"
 
     text = format_bus_arrivals_html(
-        stop['arrivals'][:MAX_ARRIVALS],
+        stop['arrivals'],
         title=stop['name'] or f"Stop {stop['code']}",
         subtitle=subtitle,
+        limit=MAX_ARRIVALS,
     )
     bot.send_message(message.chat.id, text, parse_mode='HTML',
                      reply_markup=gen_reply_keyboard())
