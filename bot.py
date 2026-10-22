@@ -196,11 +196,25 @@ def format_bus_arrivals_html(arrivals, title, subtitle=None, show_line=True):
 def send_welcome(message):
     bot.send_message(
         message.chat.id,
-        "👋 Welcome to <b>Rail Notification Bot</b>!\n\n"
-        "Use /times to get the route keyboard.\n"
-        "Send a <b>bus stop number</b> (e.g. <code>35096</code>) to see what is "
-        f"arriving there in the next {curlbus_req.DEFAULT_WINDOW_MINUTES} minutes.",
-        parse_mode='HTML'
+        "👋 <b>Rail Notification Bot</b>\n"
+        "Live trains and buses.\n"
+        f"{'━' * 20}\n\n"
+        "🚂 <b>Trains</b> - tap a route button for the next departures, "
+        "with platform and live delays.\n\n"
+        "🚌 <b>Buses</b> - tap a 460 / 464 button for the next buses in "
+        "that direction.\n\n"
+        "🔢 <b>Any stop</b> - just send a stop number, for example "
+        "<code>35096</code>, and get its name plus every line due there in "
+        f"the next {curlbus_req.DEFAULT_WINDOW_MINUTES} minutes.\n\n"
+        f"{'━' * 20}\n"
+        "<b>Commands</b>\n"
+        "/times - show or refresh the buttons\n"
+        "/help - this message\n\n"
+        "<i>Buttons gone or out of date? Send /times to bring them back.\n"
+        "Stop numbers are printed on the stop sign, and show up in Google "
+        "Maps too.</i>",
+        parse_mode='HTML',
+        reply_markup=gen_reply_keyboard()
     )
 
 
@@ -276,7 +290,7 @@ def handle_stop_code(message):
     bot.send_message(message.chat.id, f"⏳ Checking stop {stop_code}...")
 
     try:
-        arrivals = curlbus_req.get_arrivals(stop_code)
+        stop = curlbus_req.get_stop(stop_code)
     except curlbus_req.CurlbusError as e:
         bot.send_message(message.chat.id, f"❌ {e}", reply_markup=gen_reply_keyboard())
         return
@@ -286,10 +300,16 @@ def handle_stop_code(message):
                          reply_markup=gen_reply_keyboard())
         return
 
+    # curlbus knows the stop's name even when nothing is due there.
+    subtitle = f"Stop {stop['code']}"
+    if stop['city']:
+        subtitle += f" · {stop['city']}"
+    subtitle += f" · next {curlbus_req.DEFAULT_WINDOW_MINUTES} min"
+
     text = format_bus_arrivals_html(
-        arrivals[:MAX_ARRIVALS],
-        title=f"Stop {stop_code}",
-        subtitle=f"next {curlbus_req.DEFAULT_WINDOW_MINUTES} minutes",
+        stop['arrivals'][:MAX_ARRIVALS],
+        title=stop['name'] or f"Stop {stop['code']}",
+        subtitle=subtitle,
     )
     bot.send_message(message.chat.id, text, parse_mode='HTML',
                      reply_markup=gen_reply_keyboard())

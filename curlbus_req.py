@@ -107,8 +107,8 @@ def fetch_stop(stop_code):
     return payload
 
 
-def get_arrivals(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None):
-    """Upcoming arrivals at a stop, soonest first.
+def get_stop(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None):
+    """Everything we show for one stop, from a single curlbus request.
 
     Args:
         stop_code: the number printed on the bus stop sign.
@@ -116,10 +116,16 @@ def get_arrivals(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None):
         lines: optional iterable of line numbers to keep (e.g. {'460'}).
 
     Returns:
-        list of dicts: line, destination, operator, eta (datetime), minutes.
+        dict: code, name (or None), city (or None), arrivals - where each
+        arrival is a dict of line, destination, operator, eta, minutes.
     """
     stop_code = str(stop_code).strip()
     payload = fetch_stop(stop_code)
+
+    # curlbus names the stop in stop_info, independently of whether any bus is
+    # due - but it is absent for stops it has no GTFS entry for.
+    info = payload.get('stop_info') or {}
+    address = info.get('address') or {}
 
     visits = payload.get('visits') or {}
     # The key is normally the requested code, but don't assume it.
@@ -165,27 +171,26 @@ def get_arrivals(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None):
         })
 
     arrivals.sort(key=lambda a: a['eta'])
-    return arrivals
+
+    return {
+        'code': stop_code,
+        'name': _text(info.get('name')) or None,
+        # The plain 'city' field is the English one, which keeps the subtitle
+        # left-to-right next to the Hebrew stop name.
+        'city': address.get('city') or None,
+        'arrivals': arrivals,
+    }
 
 
-def get_stop_name(stop_code):
-    """Best-effort human name for a stop, taken from any visit's static info."""
-    try:
-        payload = fetch_stop(stop_code)
-    except CurlbusError:
-        return None
-    for visits in (payload.get('visits') or {}).values():
-        for visit in visits:
-            route = (visit.get('static_info') or {}).get('route') or {}
-            address = (route.get('destination') or {}).get('address') or {}
-            city = _text(address.get('city_multilingual'), address.get('city', ''))
-            if city:
-                return city
-    return None
+def get_arrivals(stop_code, within_minutes=DEFAULT_WINDOW_MINUTES, lines=None):
+    """Just the arrivals for a stop, soonest first. See get_stop()."""
+    return get_stop(stop_code, within_minutes=within_minutes, lines=lines)['arrivals']
 
 
 if __name__ == '__main__':
     import sys
     code = sys.argv[1] if len(sys.argv) > 1 else '35096'
-    for arrival in get_arrivals(code, within_minutes=30):
+    stop = get_stop(code, within_minutes=30)
+    print(f"{stop['code']}  {stop['name']}  [{stop['city']}]")
+    for arrival in stop['arrivals']:
         print(f"{arrival['line']:<5} {arrival['minutes']:>3} min  {arrival['destination']}")

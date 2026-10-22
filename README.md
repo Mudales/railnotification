@@ -82,9 +82,11 @@ python bot.py
 3. Tap a route button to see upcoming trains
 4. If a train is delayed, the original time appears with a ~~strikethrough~~ and the updated time next to it
 5. Tap a bus button (460 / 464) to see the next buses on that line and direction
-6. Send a bare **stop number** (e.g. `35096`) to see every line due at that stop
-   in the next 18 minutes - the window is `DEFAULT_WINDOW_MINUTES` in
-   `curlbus_req.py`
+6. Send a bare **stop number** (e.g. `35096`) to see the stop's name and every
+   line due there in the next 18 minutes - the window is
+   `DEFAULT_WINDOW_MINUTES` in `curlbus_req.py`
+7. `/help` explains the above and re-sends the buttons; `/times` also refreshes
+   them if they go missing
 
 Stop numbers are the ones printed on the bus stop sign, and are also visible in
 Google Maps / OpenStreetMap.
