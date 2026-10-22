@@ -8,7 +8,7 @@ It also shows real-time **bus** arrivals via [curlbus](https://github.com/elad66
 
 | Route | Stations |
 |-------|----------|
-| Lod <-> Kiryat Gat | 5000 <-> 7000 |
+| Lod <-> HaHagana (Tel Aviv) | 5000 <-> 4900 |
 | Lod <-> HaShalom (Tel Aviv) | 5000 <-> 4600 |
 
 ## Bus lines

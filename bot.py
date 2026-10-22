@@ -25,19 +25,19 @@ ALLOWED_USER_IDS = {
 
 STATIONS = {
     5000: {'Heb': 'לוד', 'Eng': 'Lod'},
-    7000: {'Heb': 'קריית גת', 'Eng': 'Kiryat Gat'},
+    4900: {'Heb': 'תל אביב - ההגנה', 'Eng': 'HaHagana'},
     4600: {'Heb': 'תל אביב - השלום', 'Eng': 'HaShalom'},
 }
 
 # Button text → (origin, dest)
-BUTTON_LOD_TO_GAT = "Lod → Kiryat Gat"
-BUTTON_GAT_TO_LOD = "Kiryat Gat → Lod"
+BUTTON_LOD_TO_HAHAGANA = "Lod → HaHagana"
+BUTTON_HAHAGANA_TO_LOD = "HaHagana → Lod"
 BUTTON_LOD_TO_HASHALOM = "Lod → HaShalom"
 BUTTON_HASHALOM_TO_LOD = "HaShalom → Lod"
 
 BUTTON_ROUTES = {
-    BUTTON_LOD_TO_GAT: (5000, 7000),
-    BUTTON_GAT_TO_LOD: (7000, 5000),
+    BUTTON_LOD_TO_HAHAGANA: (5000, 4900),
+    BUTTON_HAHAGANA_TO_LOD: (4900, 5000),
     BUTTON_LOD_TO_HASHALOM: (5000, 4600),
     BUTTON_HASHALOM_TO_LOD: (4600, 5000),
 }
@@ -81,8 +81,8 @@ def station_name(code):
 def gen_reply_keyboard(user_id=None):
     markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
     markup.row(
-        KeyboardButton(BUTTON_LOD_TO_GAT),
-        KeyboardButton(BUTTON_GAT_TO_LOD),
+        KeyboardButton(BUTTON_LOD_TO_HAHAGANA),
+        KeyboardButton(BUTTON_HAHAGANA_TO_LOD),
     )
     markup.row(
         KeyboardButton(BUTTON_LOD_TO_HASHALOM),
